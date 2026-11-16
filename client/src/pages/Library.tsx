@@ -21,8 +21,8 @@ export default function Library() {
   return (
     <AcademyShell>
       <div className="animate-rise">
-        <SectionHeading eyebrow="Scenario library" title="Eighteen folios, one standard.">
-          Listen to the recording, read the brief, then practise. Every folio carries its spoken language, difficulty and the competencies it exercises. French recordings are never presented as Arabic or English.
+        <SectionHeading eyebrow="Scenario library" title="Twenty-six folios, one standard.">
+          Listen to the recording, read the brief, then practise. Every folio carries its spoken language, difficulty and the competencies it exercises. Every folio carries its real practice language; choose French, English, German, Spanish, Italian, Japanese, Chinese, Portuguese or Arabic.
         </SectionHeading>
 
         <div className="paper-card mb-6 p-4">
@@ -65,7 +65,7 @@ export default function Library() {
         {list.isLoading ? (
           <div className="py-16 text-center text-sm text-inkmuted">Loading folios…</div>
         ) : rows.length === 0 ? (
-          <EmptyState title="No folio matches these filters">Try a different product, language or difficulty. The full catalogue has 18 scenarios.</EmptyState>
+          <EmptyState title="No folio matches these filters">Try a different product, language or difficulty. The full catalogue has 26 scenarios.</EmptyState>
         ) : (
           <div className="divide-y divide-line border-y border-line">
             {rows.map(s => (

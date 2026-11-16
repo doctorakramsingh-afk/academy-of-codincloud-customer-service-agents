@@ -34,6 +34,7 @@ type ScenarioSeed = {
   persona: string;
   difficulty: "starter" | "intermediate" | "advanced" | "expert";
   modality: "audio" | "text";
+  language?: string;
   languagePair?: string;
   summary: string;
   brief: string;
@@ -217,28 +218,104 @@ const TEXT_SCENARIOS: ScenarioSeed[] = [
   },
 ];
 
+
+const MULTILINGUAL_SALES: ScenarioSeed[] = [
+  {
+    slug: "sales-de-vendeur", folio: 19, title: "Vendeur.site — Verkaufsgespräch mit einem deutschen Händler",
+    product: "Vendeur.site", sector: "CodinCloud sales call center", persona: "Klara, Inhaberin eines deutschen Concept Stores",
+    language: "de", difficulty: "intermediate", modality: "text",
+    summary: "Ein deutschsprachiges Verkaufsgespräch über einen KI-gestützten Online-Shop und zentrale Kundenkanäle.",
+    brief: "Klara verkauft heute über Instagram und E-Mail. Sie möchte einen Online-Shop, ein gemeinsames Postfach und bessere Übersicht über Produkte und Bestellungen. Führe das Gespräch auf Deutsch: erst Bedarf und Prozess klären, dann nur bestätigte Vendeur.site-Funktionen nennen. Keine Zusage zu deutschen Zahlungsanbietern, Lieferzeiten oder Echtzeit-Synchronisation ohne Prüfung. Schließe mit einem begrenzten nächsten Schritt.",
+    coachingFocus: "Auf Deutsch präzise entdecken, Nutzen mit belegten Funktionen verbinden und offene Punkte sauber markieren.",
+    competencies: ["German sales", "Discovery", "Product truth"],
+  },
+  {
+    slug: "sales-en-dmagh", folio: 20, title: "Dmagh.ai — English discovery call with a technical buyer",
+    product: "Dmagh.ai", sector: "CodinCloud sales call center", persona: "Jordan, engineering manager at a software company",
+    language: "en", difficulty: "advanced", modality: "text",
+    summary: "An English discovery call about agent workflows, permissions, connected machines and CI/CD review.",
+    brief: "Jordan already uses a coding assistant and challenges every security claim. Explain Dmagh.ai only from the approved baseline: dmagh-code runs its agent loop on the installed machine; the ecosystem connects teams, machines and automations; public materials describe terminal, web canvas, editor, mobile and CI/CD surfaces. Never promise data residency, a certification, an ROI figure or autonomous production deployment. Ask what workflow is worth validating and agree an evidence-based next step.",
+    coachingFocus: "Technical credibility in English: distinguish architecture, current availability and verification requirements.",
+    competencies: ["English sales", "Technical discovery", "Security literacy"],
+  },
+  {
+    slug: "sales-es-vendeur", folio: 21, title: "Vendeur.site — llamada en español con una tienda multicanal",
+    product: "Vendeur.site", sector: "CodinCloud sales call center", persona: "Lucía, gerente de una tienda de cosmética que vende por redes sociales",
+    language: "es", difficulty: "intermediate", modality: "text",
+    summary: "Una llamada en español para entender pedidos, mensajes y entregas antes de proponer una tienda online.",
+    brief: "Lucía recibe mensajes por Instagram, WhatsApp y Facebook y pierde tiempo copiando pedidos. Descubre su proceso, volumen y responsables antes de presentar Vendeur.site. Puedes hablar de creador de sitios, bandeja multicanal y gestión de productos y pedidos según la información pública. No prometas integraciones de pago, inventario en tiempo real ni plazos de lanzamiento sin confirmación. Termina con una prueba de alcance limitado y un responsable.",
+    coachingFocus: "Venta consultiva en español: escuchar el flujo real y no convertir una lista de funciones en una promesa.",
+    competencies: ["Spanish sales", "Omnichannel discovery", "Next-step clarity"],
+  },
+  {
+    slug: "sales-it-dmagh", folio: 22, title: "Dmagh.ai — chiamata italiana con un responsabile IT",
+    product: "Dmagh.ai", sector: "CodinCloud sales call center", persona: "Marco, responsabile IT di una società di servizi",
+    language: "it", difficulty: "advanced", modality: "text",
+    summary: "Una chiamata in italiano su agenti di sviluppo, autorizzazioni e automazioni senza promesse non verificate.",
+    brief: "Marco teme che un agente possa eseguire azioni oltre i permessi approvati. Conduci la chiamata in italiano. Spiega che la documentazione pubblica descrive una boucle dell'agente sulla macchina installata, permessi per azione e collegamenti a team, macchine e automazioni; chiarisci che ogni configurazione deve essere verificata. Non promettere certificazioni, sovranità dei dati, risparmi o deploy autonomi. Concorda una revisione tecnica circoscritta.",
+    coachingFocus: "Gestire obiezioni tecniche in italiano, nominando limiti e proprietari della verifica.",
+    competencies: ["Italian sales", "Objection handling", "Technical boundaries"],
+  },
+  {
+    slug: "sales-ja-vendeur", folio: 23, title: "Vendeur.site — 日本語の販売相談、店舗オーナーとの初回電話",
+    product: "Vendeur.site", sector: "CodinCloud sales call center", persona: "美咲、SNSで商品を販売する小売店オーナー",
+    language: "ja", difficulty: "intermediate", modality: "text",
+    summary: "店舗運営の流れを聞き、Vendeur.siteを誇張せずに紹介する日本語の営業電話です。",
+    brief: "美咲はInstagramとメッセージで注文を受けていますが、注文と配送の確認に時間がかかっています。日本語で丁寧に許可を取り、現在の業務、注文数、担当者を確認してください。Vendeur.siteのサイト作成、複数チャネルの受信箱、商品・注文・配送管理は公開情報に基づいて説明できます。決済、在庫同期、導入日を確認なしに約束しないでください。小さな次の検証を提案します。",
+    coachingFocus: "日本語の丁寧な営業と、確認済みの機能と未確認事項の区別。",
+    competencies: ["Japanese sales", "Polite discovery", "Scope control"],
+  },
+  {
+    slug: "sales-zh-codincloud", folio: 24, title: "CodinCloud — 中文客户中心销售电话：先了解业务，再介绍方案",
+    product: "CodinCloud", sector: "CodinCloud sales call center", persona: "李娜，一家成长型零售企业的运营负责人",
+    language: "zh", difficulty: "advanced", modality: "text",
+    summary: "中文销售电话，了解电商、客户支持和技术协作需求，再选择合适的 CodinCloud 产品方向。",
+    brief: "李娜同时关心线上销售、客户消息和内部技术自动化。用中文进行一次结构化发现：先确认她的业务流程、团队和优先问题，再说明 CodinCloud 可以提供 IT 解决方案，并区分 Vendeur.site 的电商与多渠道管理方向和 Dmagh.ai 的开发代理与自动化方向。不要承诺价格、交付时间、认证或具体集成。最后确定一个有范围、有负责人、有日期的评估步骤。",
+    coachingFocus: "中文电话销售中的需求分流：不要过早选产品，也不要把公司定位说成未经批准的承诺。",
+    competencies: ["Chinese sales", "Needs qualification", "Portfolio positioning"],
+  },
+  {
+    slug: "sales-pt-vendeur", folio: 25, title: "Vendeur.site — chamada em português com uma marca de comércio online",
+    product: "Vendeur.site", sector: "CodinCloud sales call center", persona: "Rafael, fundador de uma marca que vende por mensagens e marketplace",
+    language: "pt", difficulty: "intermediate", modality: "text",
+    summary: "Uma chamada em português sobre loja online, caixa de entrada multicanal, pedidos e entregas.",
+    brief: "Rafael recebe pedidos no Instagram, WhatsApp e marketplace e não tem uma visão única dos clientes. Conduza a conversa em português, começando pelo processo atual e pelo volume de pedidos. Apresente apenas o que a página pública confirma sobre criação de loja, caixa de entrada multicanal, produtos, pedidos, clientes, entregas e analytics. Não invente gateways, prazos, suporte ou resultados. Feche com uma demonstração ou revisão de dados com escopo definido, sem exigir compra.",
+    coachingFocus: "Venda consultiva em português, com linguagem clara e compromisso comercial limitado.",
+    competencies: ["Portuguese sales", "Multichannel discovery", "Ethical closing"],
+  },
+  {
+    slug: "sales-fr-codincloud", folio: 26, title: "CodinCloud — appel français pour une solution IT complète",
+    product: "CodinCloud", sector: "CodinCloud sales call center", persona: "Nour, directrice des opérations d'une PME en croissance",
+    language: "fr", difficulty: "advanced", modality: "text",
+    summary: "Un appel français qui relie besoin commercial, support vendeur et automatisation technique sans faire de promesse globale.",
+    brief: "Nour cherche à mieux accompagner ses vendeurs en ligne et à réduire les tâches techniques répétitives. Conduis l'appel en français. Clarifie d'abord si le besoin relève de Vendeur.site (site, messages, produits, commandes, livraisons, analytics) ou de Dmagh.ai (agent de développement, machines, automatisations et CI/CD). Ne promets ni résultat, ni certification, ni intégration, ni délai sans validation. Conclus avec un diagnostic limité et un propriétaire côté CodinCloud.",
+    coachingFocus: "Positionnement portefeuille en français : orienter sans noyer le client dans les produits.",
+    competencies: ["French sales", "Portfolio discovery", "Executive communication"],
+  },
+];
+
 const FACTS = [
   {
     product: "CodinCloud",
-    version: "v1.0",
-    content: `APPROVED FACTS (public positioning, 2026-11). CodinCloud is a digital solutions company building AI, commerce and work tools. Its portfolio includes Vendeur.site (commerce), Dmagh.ai (AI development and orchestration) and Lanci.io (MCP marketplace). Founder: Aymen Chaieb. CodinCloud accompanies businesses on digital projects and online commerce.
-DO NOT CLAIM without written confirmation: specific pricing, SLAs, certifications (ISO, SOC 2), named client logos, headcount, funding, revenue, or guaranteed results. Any commitment on delivery dates, discounts or contract terms must be escalated to the commercial owner.`,
+    version: "v1.1",
+    content: `APPROVED FACTS (public positioning, 2026-11). CodinCloud presents itself as an IT and digital-solutions company supporting online sellers and businesses with e-commerce, technical support, marketing and website development. Its public portfolio includes Vendeur.site for commerce, Dmagh.ai for AI-assisted development and orchestration, and Lanci.io for agent workspaces and MCP tools. CodinCloud describes seller and client portals plus ticketing for communication and support.
+DO NOT CLAIM without written confirmation: a guaranteed outcome, SLA, certification, named client reference, delivery date, discount, contract term, security posture beyond the product's public wording, or a capability belonging to another CodinCloud product.`,
   },
   {
     product: "Vendeur.site",
-    version: "v1.0",
-    content: `APPROVED FACTS (public positioning, 2026-11). Vendeur.site is an e-commerce storefront platform for sellers, positioned for merchants who want to sell online and manage their catalogue and orders.
-TO CONFIRM WITH THE PRODUCT OWNER: payment providers, delivery integrations, multi-vendor payouts, recurring billing, serial-number or warranty tracking, B2B price lists, and real-time stock synchronisation. Never present a conditional capability as available. Do not promise a launch date, a conversion rate, a price or a discount.`,
+    version: "v1.1",
+    content: `APPROVED FACTS (public positioning, 2026-11). Vendeur.site publicly presents an AI-assisted site builder for online stores, a multi-channel inbox for Messenger, Instagram, WhatsApp and Marketplace, and management for products, stock, orders, customers, employees and couriers. Its public page also describes TunisiaShip shipping, analytics and RFM segmentation, CSV exports, version restoration, custom domains, and an AI studio that can edit a store conversationally. Public pricing shown is Starter free, Pro 49 TND/month and Business contact us; the current price and terms must still be confirmed before quoting.
+TO CONFIRM WITH THE PRODUCT OWNER: any payment provider beyond what the current product page states, exact delivery or stock-sync behavior, multi-vendor payout details, customer-specific data handling, launch dates, discounts, SLAs or guaranteed conversion/results. Never present a roadmap item as live.`,
   },
   {
     product: "Dmagh.ai",
-    version: "v1.0",
-    content: `APPROVED FACTS (public positioning, 2026-11). Dmagh.ai is presented publicly as an AI development and orchestration ecosystem: AI assistant, workspaces, agents, code, integrations, CI/CD and cost visibility.
-DO NOT CLAIM: security certifications, data-residency guarantees, specific model providers, exact prices, ROI figures or performance guarantees. Security and compliance questions must be routed to a technical and legal validation, with a named owner and date.`,
+    version: "v1.1",
+    content: `APPROVED FACTS (public positioning, 2026-11). Dmagh.ai publicly presents dmagh-code as a programming agent whose agent loop — tools, permissions and sessions — runs on the machine where it is installed, while the model produces text. The ecosystem connects teams, machines and automations and presents terminal, web canvas, VS Code/editor, mobile and assistant surfaces. Public materials describe automations, approval requests, MCP packs and dmagh ci for pull-request review, failed-check repair and failure analysis, with SARIF, Code Quality and PR-comment outputs. Some surfaces are labelled Soon or In preparation and must not be sold as available.
+DO NOT CLAIM: a security certification, absolute data residency, a specific model provider, exact model costs, ROI, performance, autonomous production authority or a capability marked Soon/In preparation. Security and compliance questions require technical and legal validation with a named owner and date.`,
   },
   {
     product: "Lanci.io",
-    version: "v1.0",
+    version: "v1.1",
     content: `APPROVED FACTS (public positioning, 2026-11). Lanci.io is presented publicly as an MCP marketplace that connects agents to business tools and provides isolated workspaces.
 DO NOT CLAIM: a specific list of supported tools, certifications, data-residency guarantees or prices. Any integration claim requires confirmation from the product owner.`,
   },
@@ -252,47 +329,44 @@ export async function seedAcademy() {
   const db = await getDb();
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
-  // Scenarios + media
-  const existing = await db.select({ id: scenarios.id }).from(scenarios).limit(1);
-  if (existing.length === 0) {
-    const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS];
-    for (const s of all) {
-      const [row] = await db.insert(scenarios).values({
-        slug: s.slug,
-        folio: s.folio,
-        title: s.title,
-        product: s.product,
-        sector: s.sector,
-        persona: s.persona,
-        language: s.languagePair ? s.languagePair : "fr",
-        languagePair: s.languagePair ?? null,
-        difficulty: s.difficulty,
-        modality: s.modality,
-        summary: s.summary,
-        brief: s.brief,
-        coachingFocus: s.coachingFocus,
-        competencies: JSON.stringify(s.competencies),
-        rubric: rubricJson(),
+  // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES];
+  for (const s of all) {
+    const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
+    if (present) continue;
+    const [row] = await db.insert(scenarios).values({
+      slug: s.slug,
+      folio: s.folio,
+      title: s.title,
+      product: s.product,
+      sector: s.sector,
+      persona: s.persona,
+      language: s.language ?? (s.languagePair ? s.languagePair : "fr"),
+      languagePair: s.languagePair ?? null,
+      difficulty: s.difficulty,
+      modality: s.modality,
+      summary: s.summary,
+      brief: s.brief,
+      coachingFocus: s.coachingFocus,
+      competencies: JSON.stringify(s.competencies),
+      rubric: rubricJson(),
+      durationSeconds: s.duration ?? 0,
+      factVersion: "v1.0",
+      status: "published",
+    });
+    const id = (row as { insertId: number }).insertId;
+    if (s.file) {
+      await db.insert(mediaAssets).values({
+        scenarioId: id,
+        storageKey: `/manus-storage/${s.file}`,
+        mimeType: "audio/mpeg",
         durationSeconds: s.duration ?? 0,
-        factVersion: "v1.0",
-        status: "published",
+        language: s.language ?? "fr",
+        description: `${s.language ?? "fr"} simulation recording — ${s.title}`,
       });
-      const id = (row as { insertId: number }).insertId;
-      if (s.file) {
-        await db.insert(mediaAssets).values({
-          scenarioId: id,
-          storageKey: `/manus-storage/${s.file}`,
-          mimeType: "audio/mpeg",
-          durationSeconds: s.duration ?? 0,
-          language: "fr",
-          description: `French simulation recording — ${s.title}`,
-        });
-      }
     }
-    console.log(`Seeded ${all.length} scenarios`);
-  } else {
-    console.log("Scenarios already seeded");
   }
+  console.log(`Academy catalogue checked: ${all.length} scenario definitions`);
 
   // Product facts
   const facts = await db.select({ id: productFacts.id }).from(productFacts).limit(1);

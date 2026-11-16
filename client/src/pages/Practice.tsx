@@ -82,13 +82,13 @@ function PracticeInner() {
         </div>
       )}
 
-      {tab === "respond" && <StructuredResponse slug={s.slug} product={s.product} />}
+      {tab === "respond" && <StructuredResponse slug={s.slug} product={s.product} language={s.language} />}
       {tab === "roleplay" && <RolePlay slug={s.slug} languagePair={s.languagePair} approved={s.factApproved} defaultLanguage={me?.profile.preferredLanguage ?? "fr"} />}
     </div>
   );
 }
 
-function StructuredResponse({ slug, product }: { slug: string; product: string }) {
+function StructuredResponse({ slug, product, language }: { slug: string; product: string; language: string }) {
   const { me } = useAcademy();
   const utils = trpc.useUtils();
   const [text, setText] = useState("");
@@ -118,7 +118,7 @@ function StructuredResponse({ slug, product }: { slug: string; product: string }
             I consent to saving this practice record for my own history and my assigned coach.
           </label>
           <button
-            onClick={() => submit.mutate({ scenarioSlug: slug, mode: "structured", language: "fr", reflection: text, consent, durationSeconds: 0 })}
+            onClick={() => submit.mutate({ scenarioSlug: slug, mode: "structured", language, reflection: text, consent, durationSeconds: 0 })}
             disabled={!text.trim() || submit.isPending}
             className="inline-flex items-center gap-2 rounded-sm bg-ink px-4 py-2 text-[13px] font-medium text-paper hover:bg-ink-soft disabled:opacity-40"
           >
@@ -180,7 +180,7 @@ function RolePlay({ slug, languagePair, approved, defaultLanguage }: { slug: str
             <span className="eyebrow">Simulated client</span>
             {languagePair ? <span className="stamp stamp-review">{LANGUAGE_LABELS[languagePair]}</span> : (
               <select value={language} onChange={e => setLanguage(e.target.value)} className="rounded-sm border border-line bg-paper px-2 py-1 text-[11px]" aria-label="Role-play language">
-                {["fr", "en", "ar", "de", "es"].map(l => <option key={l} value={l}>{LANGUAGE_LABELS[l]}</option>)}
+                {["fr", "en", "de", "es", "it", "pt", "ja", "zh", "ar"].map(l => <option key={l} value={l}>{LANGUAGE_LABELS[l]}</option>)}
               </select>
             )}
           </div>
