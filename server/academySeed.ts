@@ -307,6 +307,16 @@ const CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "009": { file: "challenge-call-009_57cd96bb.mp3", duration: 45 },
   "010": { file: "challenge-call-010_9e2f4155.mp3", duration: 48 },
   "011": { file: "challenge-call-011_f4c1e072.mp3", duration: 45 },
+  "012": { file: "challenge-call-012_e06f61bb.mp3", duration: 45 },
+  "013": { file: "challenge-call-013_75bcdb9b.mp3", duration: 45 },
+  "014": { file: "challenge-call-014_8e63af0e.mp3", duration: 45 },
+  "015": { file: "challenge-call-015_74983522.mp3", duration: 45 },
+  "016": { file: "challenge-call-016_5da6db7b.mp3", duration: 45 },
+  "017": { file: "challenge-call-017_b26ca37.mp3", duration: 45 },
+  "018": { file: "challenge-call-018_9e43268d.mp3", duration: 45 },
+  "019": { file: "challenge-call-019_eb469fd8.mp3", duration: 45 },
+  "020": { file: "challenge-call-020_391ee84b.mp3", duration: 45 },
+  "021": { file: "challenge-call-021_7eebaaf0.mp3", duration: 45 },
 };
 
 const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) => {
