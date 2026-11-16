@@ -1,14 +1,26 @@
-# CodinCloud Academy
+# Academy of CodinCloud Customer Service Agents
 
-React / Express / tRPC / Drizzle starter, adapted from the Sandbox web-db-user template.
+An open-source training SaaS for people who represent CodinCloud across customer service, sales, onboarding, technical support and after-sales conversations.
 
-- `pnpm dev`: development server; honors `PORT` (default 3000).
-- `pnpm build` / `pnpm start`: build and serve `dist/index.js` and `dist/public/`.
-- `pnpm db:migrate`: apply checked-in migrations. `pnpm db:push`: generate and apply new schema changes.
-- `pnpm check` / `pnpm test`: types and application tests.
+## 100-call English challenge
 
-Start with the Webdev skill's default-template guide. Platform login, storage, payments and service contracts live in its shared references; read the relevant capability before extending its helper.
+The first challenge pack contains 100 expert-level English call simulations for dealing with extremely tough customers covering hostile procurement, security escalation, failed pilots, outage triage, integration boundaries, competitor and pricing pressure, vulnerable callers, ROI demands, renewal scope creep and cross-cultural handoffs. Every call is fictional training material. It never uses real customer, trainee or candidate data.
 
-`server/_core/publicConfig.ts` exposes only named public runtime values. Private keys stay server-side. The platform serves managed `/manus-storage/` assets; the application does not register a second proxy.
+The Academy teaches evidence-led conversations around CodinCloud solutions including Vendeur.site, Dmagh.ai, Lanci.io and CodinCloud support services. The AI role-play is bounded by an administrator-approved product-fact baseline: it must not invent capabilities, prices, integrations, certifications, results or commitments. Formal scores, coaching and hiring decisions remain human.
 
-Platform configuration is readable and editable through `webdev.config`. Default settings are initial values, not enforced constraints. The agent may modify the files, commands and configuration or follow the flexible guide for another stack.
+## Languages
+
+The English challenge pack is first. The same SaaS already has role-play language support for French, Spanish, German, Italian, Portuguese, Japanese, Chinese and Arabic, plus bilingual interview pathways. Localized challenge packs can be added without changing the assessment, consent, assignment or coaching model.
+
+## Stack
+
+React, TypeScript, Vite, Tailwind, Express, tRPC, Drizzle and managed MySQL. Audio uses managed object storage; durable records use the database.
+
+## Local development
+
+```bash
+pnpm install
+pnpm dev
+```
+
+This project is a training prototype. Do not enter real customer or candidate data.

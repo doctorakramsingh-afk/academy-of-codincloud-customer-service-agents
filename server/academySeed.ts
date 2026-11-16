@@ -294,6 +294,44 @@ const MULTILINGUAL_SALES: ScenarioSeed[] = [
   },
 ];
 
+
+const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) => {
+  const n = index + 1;
+  const number = String(n).padStart(3, "0");
+  const products = ["Vendeur.site", "Dmagh.ai", "CodinCloud", "Lanci.io"];
+  const sectors = ["retail operations", "SaaS engineering", "customer support", "online marketplace", "professional services"];
+  const themes = [
+    { name: "The hostile procurement lead", persona: "a procurement lead who interrupts every answer", issue: "demands a final price and a signed implementation date before sharing any context", focus: "slow down the pressure, qualify authority and separate discovery from commercial commitment" },
+    { name: "The security escalation", persona: "a security director who assumes the worst", issue: "asks for certifications, data-residency guarantees and a written threat model", focus: "acknowledge the concern, state only approved facts and create a technical validation path" },
+    { name: "The failed pilot", persona: "a disappointed operations manager", issue: "says a previous software pilot wasted six weeks and refuses another generic demo", focus: "rebuild trust with a bounded diagnostic, measurable evidence and a named owner" },
+    { name: "The angry outage call", persona: "a customer who believes a live business process is blocked", issue: "demands an immediate fix while the agent cannot verify the incident or account", focus: "show empathy, protect account data, triage safely and own the handover" },
+    { name: "The impossible integration", persona: "a technical buyer with a long integration checklist", issue: "requires an unconfirmed connector, custom workflow and guaranteed migration", focus: "map requirements, label unknowns and propose the smallest evidence-based test" },
+    { name: "The price and competitor trap", persona: "a founder comparing three vendors on a recorded call", issue: "asks you to disparage a competitor and match an unapproved discount", focus: "stay respectful, uncover decision criteria and never invent pricing or superiority" },
+    { name: "The vulnerable caller", persona: "a stressed customer who struggles to follow technical language", issue: "is worried about a payment, privacy or access problem and wants you to bypass verification", focus: "use plain language, minimise data, verify safely and escalate without abandonment" },
+    { name: "The executive ROI challenge", persona: "a CFO who wants a guaranteed return in ninety days", issue: "will approve only a quantified outcome and asks for a customer reference you cannot provide", focus: "translate value into testable hypotheses without promising ROI or fabricating references" },
+    { name: "The scope-creep renewal", persona: "an existing customer asking for a larger renewal", issue: "bundles five new requirements into a renewal call and expects them all to be included", focus: "recognise the relationship, separate current facts from roadmap and define a review backlog" },
+    { name: "The cross-cultural handoff", persona: "a global team with different expectations about urgency and ownership", issue: "switches terminology mid-call and blames the previous agent for an unclear next step", focus: "reformulate, confirm understanding, document ownership and close with a precise follow-up" },
+  ];
+  const theme = themes[index % themes.length];
+  const product = products[index % products.length];
+  const sector = sectors[index % sectors.length];
+  return {
+    slug: `challenge-call-${number}`,
+    folio: 26 + n,
+    title: `Call ${number} — ${theme.name}: ${product}`,
+    product,
+    sector: `CodinCloud challenge call · ${sector}`,
+    persona: theme.persona,
+    language: "en",
+    difficulty: "expert",
+    modality: "text",
+    summary: `A high-pressure English ${product} call designed to test safe discovery, product truth and human ownership.`,
+    brief: `This is challenge call ${number} in the CodinCloud 100-call English track. The customer ${theme.issue}. You are the CodinCloud customer-service or sales agent. Start by establishing what is known, what the caller needs now and what you are authorised to do. Use only the approved product baseline for ${product}; never invent a feature, integration, price, certification, result, timeline or customer reference. ${theme.focus}. End with a concise recap, a named owner and a realistic next step.`,
+    coachingFocus: `Expert practice: ${theme.focus}. The formal assessment remains human and rewards accuracy, empathy, boundaries and ownership over a fast pitch.`,
+    competencies: ["English customer service", "High-pressure discovery", "Product truth", "Escalation", "Ownership"],
+  };
+});
+
 const FACTS = [
   {
     product: "CodinCloud",
@@ -330,7 +368,7 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     if (present) continue;
