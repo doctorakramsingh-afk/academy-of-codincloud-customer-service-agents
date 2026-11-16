@@ -180,13 +180,13 @@ const PRESENTATIONS: ScenarioSeed[] = [
 
 const TEXT_SCENARIOS: ScenarioSeed[] = [
   {
-    slug: "dmagh-technolamia", folio: 15, title: "Dmagh.ai — the ten-minute call with Lamia of TechnoLamIA",
-    product: "Dmagh.ai", sector: "Web development & IT solutions", persona: "Lamia, owner of fictional TechnoLamIA, offering AI augmentation and web security",
-    difficulty: "expert", modality: "text",
-    summary: "A long, resistant discovery call with a technical founder who will not buy, trial, share a repository or schedule a follow-up.",
-    brief: "Lamia runs a web-development and IT-security company. She is exceptionally resistant and has seen many AI pitches. Use verified Dmagh.ai facts only: an AI development and orchestration ecosystem with workspaces, agents, code, integrations, CI/CD and cost visibility. Never invent security certifications, prices, ROI or performance guarantees. The expected outcome is a respectful no with a clear record of what was heard and what would need to be true to reopen the conversation.",
-    coachingFocus: "Sustain a ten-minute discovery under pressure; separate published facts from claims that require verification; accept a no without chasing.",
-    competencies: ["Long-form discovery", "Security literacy", "Respectful disqualification"],
+    slug: "dmagh-technolamia", folio: 15, title: "Dmagh.ai — the ten-minute call with Lemya of TechnoLamIA",
+    product: "Dmagh.ai", sector: "Web development & IT solutions", persona: "Lemya, owner of fictional TechnoLamIA, offering AI augmentation and web security",
+    difficulty: "expert", modality: "audio", file: "Dmagh_TechnoLamIA_Appel_FR_v2_4ce9b6e5.mp3", duration: 600,
+    summary: "A ten-minute French negotiation with a highly resistant technical founder that ends in a bounded Solo-plan close.",
+    brief: "Lemya runs a web-development and IT-security company. She is exceptionally resistant and has seen many AI pitches. Roued El Fadhel, CodinCloud's marketing manager, must sustain ten minutes of technical and commercial objections without inventing a certification, a data-residency guarantee, an ROI figure or a superiority claim. The published Solo offer is 49 EUR HT per month for one seat; quotas, model costs, support and renewal terms must be confirmed in writing. The call ends with Lemya accepting one Solo seat for a thirty-day internal evaluation on a scrubbed repository, with no client code, no production access and a written security checklist.",
+    coachingFocus: "Sustain a ten-minute negotiation under pressure; separate published facts from claims that require verification; earn a bounded close without overselling or chasing.",
+    competencies: ["Long-form discovery", "Security literacy", "Objection handling", "Bounded closing"],
   },
   {
     slug: "lanci-discovery", folio: 16, title: "Lanci.io — connecting agents to business tools",
