@@ -295,6 +295,20 @@ const MULTILINGUAL_SALES: ScenarioSeed[] = [
 ];
 
 
+const CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "challenge-call-001_d2938eb4.mp3", duration: 52 },
+  "002": { file: "challenge-call-002_522bae06.mp3", duration: 44 },
+  "003": { file: "challenge-call-003_71d6510f.mp3", duration: 43 },
+  "004": { file: "challenge-call-004_6ca9b797.mp3", duration: 43 },
+  "005": { file: "challenge-call-005_4fd538b9.mp3", duration: 49 },
+  "006": { file: "challenge-call-006_6f2a5172.mp3", duration: 39 },
+  "007": { file: "challenge-call-007_2fb1eb50.mp3", duration: 43 },
+  "008": { file: "challenge-call-008_cc2f32c9.mp3", duration: 36 },
+  "009": { file: "challenge-call-009_57cd96bb.mp3", duration: 45 },
+  "010": { file: "challenge-call-010_9e2f4155.mp3", duration: 48 },
+  "011": { file: "challenge-call-011_f4c1e072.mp3", duration: 45 },
+};
+
 const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) => {
   const n = index + 1;
   const number = String(n).padStart(3, "0");
@@ -329,6 +343,8 @@ const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) =
     brief: `This is challenge call ${number} in the CodinCloud 100-call English track. The customer ${theme.issue}. You are the CodinCloud customer-service or sales agent. Start by establishing what is known, what the caller needs now and what you are authorised to do. Use only the approved product baseline for ${product}; never invent a feature, integration, price, certification, result, timeline or customer reference. ${theme.focus}. End with a concise recap, a named owner and a realistic next step.`,
     coachingFocus: `Expert practice: ${theme.focus}. The formal assessment remains human and rewards accuracy, empathy, boundaries and ownership over a fast pitch.`,
     competencies: ["English customer service", "High-pressure discovery", "Product truth", "Escalation", "Ownership"],
+    file: CHALLENGE_AUDIO[number]?.file,
+    duration: CHALLENGE_AUDIO[number]?.duration,
   };
 });
 
