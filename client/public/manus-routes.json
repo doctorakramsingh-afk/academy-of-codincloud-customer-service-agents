@@ -1,0 +1,12 @@
+{
+  "routes": [
+    { "path": "/", "title": "Overview" },
+    { "path": "/library", "title": "Scenario library" },
+    { "path": "/scenarios/:slug", "title": "Scenario folio" },
+    { "path": "/practice/:slug", "title": "Practice room" },
+    { "path": "/assignments", "title": "My assignments" },
+    { "path": "/coach", "title": "Review queue" },
+    { "path": "/interview", "title": "Interview readiness" },
+    { "path": "/admin", "title": "Administration" }
+  ]
+}
