@@ -368,6 +368,19 @@ const CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "070": { file: "challenge-call-070_66cd80d5.mp3", duration: 45 },
 };
 
+const FRENCH_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "french-call-001_65ba88a5.mp3", duration: 30 },
+  "002": { file: "french-call-002_0e69c4ea.mp3", duration: 31 },
+  "003": { file: "french-call-003_e58a65d3.mp3", duration: 29 },
+  "004": { file: "french-call-004_63b03bbe.mp3", duration: 29 },
+  "005": { file: "french-call-005_8153eb7e.mp3", duration: 26 },
+  "006": { file: "french-call-006_d9e9930f.mp3", duration: 31 },
+  "007": { file: "french-call-007_9b472738.mp3", duration: 25 },
+  "008": { file: "french-call-008_46005681.mp3", duration: 29 },
+  "009": { file: "french-call-009_b9352749.mp3", duration: 30 },
+  "010": { file: "french-call-010_72a90abb.mp3", duration: 30 },
+};
+
 const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index) => {
   const n = index + 1;
   const number = String(n).padStart(3, "0");
@@ -446,6 +459,8 @@ const FRENCH_SIMULATIONS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index
     brief: `Simulation française ${number}. Vous êtes ${agent} du service client ou des ventes de CodinCloud. ${theme.persona} ${theme.issue}. Commencez par reformuler le besoin et l'impact. Utilisez uniquement les faits approuvés pour ${product}; n'inventez ni fonctionnalité, ni intégration, ni tarif, ni certification, ni résultat, ni délai. ${theme.focus}. Terminez par un récapitulatif, un responsable identifié et une prochaine étape réaliste.`,
     coachingFocus: `Entraînement expert : ${theme.focus}. L'évaluation humaine valorise l'écoute, la précision, la sécurité, l'empathie et la prise en charge plutôt qu'un discours commercial rapide.`,
     competencies: ["Français professionnel", "Client difficile", "Écoute active", "Service après-vente", "Escalade responsable"],
+    file: FRENCH_CHALLENGE_AUDIO[number]?.file,
+    duration: FRENCH_CHALLENGE_AUDIO[number]?.duration,
   };
 });
 
@@ -488,37 +503,44 @@ export async function seedAcademy() {
   const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
-    if (present) continue;
-    const [row] = await db.insert(scenarios).values({
-      slug: s.slug,
-      folio: s.folio,
-      title: s.title,
-      product: s.product,
-      sector: s.sector,
-      persona: s.persona,
-      language: s.language ?? (s.languagePair ? s.languagePair : "fr"),
-      languagePair: s.languagePair ?? null,
-      difficulty: s.difficulty,
-      modality: s.modality,
-      summary: s.summary,
-      brief: s.brief,
-      coachingFocus: s.coachingFocus,
-      competencies: JSON.stringify(s.competencies),
-      rubric: rubricJson(),
-      durationSeconds: s.duration ?? 0,
-      factVersion: "v1.2",
-      status: "published",
-    });
-    const id = (row as { insertId: number }).insertId;
-    if (s.file) {
-      await db.insert(mediaAssets).values({
-        scenarioId: id,
-        storageKey: `/manus-storage/${s.file}`,
-        mimeType: "audio/mpeg",
+    let id: number;
+    if (present) {
+      id = present.id;
+    } else {
+      const [row] = await db.insert(scenarios).values({
+        slug: s.slug,
+        folio: s.folio,
+        title: s.title,
+        product: s.product,
+        sector: s.sector,
+        persona: s.persona,
+        language: s.language ?? (s.languagePair ? s.languagePair : "fr"),
+        languagePair: s.languagePair ?? null,
+        difficulty: s.difficulty,
+        modality: s.modality,
+        summary: s.summary,
+        brief: s.brief,
+        coachingFocus: s.coachingFocus,
+        competencies: JSON.stringify(s.competencies),
+        rubric: rubricJson(),
         durationSeconds: s.duration ?? 0,
-        language: s.language ?? "fr",
-        description: `${s.language ?? "fr"} simulation recording — ${s.title}`,
+        factVersion: "v1.2",
+        status: "published",
       });
+      id = (row as { insertId: number }).insertId;
+    }
+    if (s.file) {
+      const [media] = await db.select({ id: mediaAssets.id }).from(mediaAssets).where(eq(mediaAssets.scenarioId, id)).limit(1);
+      if (!media) {
+        await db.insert(mediaAssets).values({
+          scenarioId: id,
+          storageKey: `/manus-storage/${s.file}`,
+          mimeType: "audio/mpeg",
+          durationSeconds: s.duration ?? 0,
+          language: s.language ?? "fr",
+          description: `${s.language ?? "fr"} simulation recording — ${s.title}`,
+        });
+      }
     }
   }
   console.log(`Academy catalogue checked: ${all.length} scenario definitions`);
