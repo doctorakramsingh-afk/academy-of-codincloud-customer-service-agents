@@ -329,11 +329,11 @@ const CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "031": { file: "challenge-call-031_2b65e58f.mp3", duration: 45 },
 };
 
-const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) => {
+const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index) => {
   const n = index + 1;
   const number = String(n).padStart(3, "0");
   const products = ["Vendeur.site", "Dmagh.ai", "CodinCloud", "Lanci.io"];
-  const sectors = ["retail operations", "SaaS engineering", "customer support", "online marketplace", "professional services"];
+  const sectors = ["retail operations", "SaaS engineering", "customer support", "online marketplace", "professional services", "healthcare administration", "logistics", "financial services", "education", "hospitality"];
   const themes = [
     { name: "The hostile procurement lead", persona: "a procurement lead who interrupts every answer", issue: "demands a final price and a signed implementation date before sharing any context", focus: "slow down the pressure, qualify authority and separate discovery from commercial commitment" },
     { name: "The security escalation", persona: "a security director who assumes the worst", issue: "asks for certifications, data-residency guarantees and a written threat model", focus: "acknowledge the concern, state only approved facts and create a technical validation path" },
@@ -349,6 +349,8 @@ const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) =
   const theme = themes[index % themes.length];
   const product = products[index % products.length];
   const sector = sectors[index % sectors.length];
+  const intensity = ["executive pressure", "live escalation", "commercial negotiation", "technical validation", "service recovery"][Math.floor(index / 10) % 5];
+  const difficulty = n <= 100 ? "expert" : n % 3 === 0 ? "advanced" : "expert";
   return {
     slug: `challenge-call-${number}`,
     folio: 26 + n,
@@ -357,10 +359,10 @@ const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) =
     sector: `CodinCloud challenge call · ${sector}`,
     persona: theme.persona,
     language: "en",
-    difficulty: "expert",
+    difficulty,
     modality: "text",
-    summary: `A high-pressure English ${product} call designed to test safe discovery, product truth and human ownership.`,
-    brief: `This is challenge call ${number} in the CodinCloud 100-call English track. The customer ${theme.issue}. You are the CodinCloud customer-service or sales agent. Start by establishing what is known, what the caller needs now and what you are authorised to do. Use only the approved product baseline for ${product}; never invent a feature, integration, price, certification, result, timeline or customer reference. ${theme.focus}. End with a concise recap, a named owner and a realistic next step.`,
+    summary: `A high-pressure English ${product} simulation focused on ${intensity}, safe discovery, product truth and human ownership.`,
+    brief: `This is challenge call ${number} in the CodinCloud 500-simulation English track. The customer ${theme.issue}. You are the CodinCloud customer-service or sales agent. Start by establishing what is known, what the caller needs now and what you are authorised to do. Use only the approved product baseline for ${product}; never invent a feature, integration, price, certification, result, timeline or customer reference. ${theme.focus}. End with a concise recap, a named owner and a realistic next step.`,
     coachingFocus: `Expert practice: ${theme.focus}. The formal assessment remains human and rewards accuracy, empathy, boundaries and ownership over a fast pitch.`,
     competencies: ["English customer service", "High-pressure discovery", "Product truth", "Escalation", "Ownership"],
     file: CHALLENGE_AUDIO[number]?.file,
@@ -368,28 +370,68 @@ const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 100 }, (_, index) =
   };
 });
 
+
+const FRENCH_SIMULATIONS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index) => {
+  const n = index + 1;
+  const number = String(n).padStart(3, "0");
+  const products = ["CodinCloud", "Vendeur.site", "Dmagh.ai", "Lanci.io"];
+  const sectors = ["commerce en ligne", "support client", "services professionnels", "logistique", "formation", "hôtellerie", "santé administrative", "finance", "industrie", "marketplace"];
+  const themes = [
+    { title: "La cliente exige un remboursement", persona: "une cliente très mécontente", issue: "exige un remboursement immédiat et affirme que la solution lui a fait perdre du temps", focus: "accueillir la colère, vérifier les faits et ne jamais promettre une décision financière non autorisée" },
+    { title: "Le directeur menace de partir", persona: "un directeur qui menace de résilier", issue: "annonce qu'il partira chez un concurrent si son problème n'est pas résolu pendant l'appel", focus: "reformuler l'impact, distinguer urgence et promesse, puis obtenir un propriétaire d'escalade" },
+    { title: "L'intégration impossible", persona: "un responsable informatique très exigeant", issue: "demande une intégration non confirmée, une migration complète et zéro interruption", focus: "séparer les exigences, identifier les inconnues et proposer un test limité et vérifiable" },
+    { title: "La panne pendant les commandes", persona: "une responsable des opérations sous pression", issue: "signale que les commandes ou les messages sont bloqués pendant une période critique", focus: "triage sécurisé, impact métier, données minimisées et suivi avec un responsable nommé" },
+    { title: "Le prix imposé", persona: "un acheteur qui veut le prix le plus bas", issue: "demande une remise non approuvée et veut que l'agent critique un concurrent", focus: "rester loyal, ne pas inventer de prix et ramener la discussion aux critères de décision" },
+    { title: "La promesse commerciale contestée", persona: "une fondatrice qui cite une promesse d'un vendeur", issue: "affirme qu'une fonctionnalité et une date lui ont été garanties", focus: "vérifier la trace, reconnaître l'écart et éviter de répéter une promesse non vérifiée" },
+    { title: "Le client vulnérable", persona: "un client stressé qui ne maîtrise pas les outils numériques", issue: "demande de contourner la vérification et veut communiquer des informations sensibles", focus: "expliquer simplement, protéger ses données et conserver une aide humaine" },
+    { title: "Le comité de direction veut un ROI", persona: "une directrice financière qui prépare un comité", issue: "demande une garantie de retour sur investissement et une référence client immédiate", focus: "construire une hypothèse mesurable sans inventer de résultat ni de référence" },
+    { title: "Le renouvellement hors périmètre", persona: "une responsable de compte historique", issue: "ajoute plusieurs demandes techniques et de support au renouvellement sans budget supplémentaire", focus: "séparer l'existant, la demande et la feuille de route, puis définir les décisions" },
+    { title: "Le service après-vente multicanal", persona: "un responsable après-vente débordé", issue: "reçoit des réclamations sur Messenger, Instagram, WhatsApp et la marketplace sans visibilité commune", focus: "cartographier le flux, qualifier la priorité et proposer une prochaine étape réaliste" },
+  ];
+  const theme = themes[index % themes.length];
+  const product = products[index % products.length];
+  const sector = sectors[index % sectors.length];
+  const agent = index % 2 === 0 ? "l'agent" : "l'agente";
+  const intensity = ["appel de crise", "vente consultative", "support technique", "service après-vente", "renouvellement"][Math.floor(index / 10) % 5];
+  return {
+    slug: `simulation-fr-${number}`,
+    folio: 526 + n,
+    title: `FR ${number} — ${theme.title} · ${product}`,
+    product,
+    sector: `Simulation française · ${sector}`,
+    persona: theme.persona,
+    language: "fr",
+    difficulty: n <= 100 ? "expert" : n % 3 === 0 ? "advanced" : "expert",
+    modality: "text",
+    summary: `Simulation ${intensity} pour entraîner un agent ou une agente CodinCloud face à une situation difficile.`,
+    brief: `Simulation française ${number}. Vous êtes ${agent} du service client ou des ventes de CodinCloud. ${theme.persona} ${theme.issue}. Commencez par reformuler le besoin et l'impact. Utilisez uniquement les faits approuvés pour ${product}; n'inventez ni fonctionnalité, ni intégration, ni tarif, ni certification, ni résultat, ni délai. ${theme.focus}. Terminez par un récapitulatif, un responsable identifié et une prochaine étape réaliste.`,
+    coachingFocus: `Entraînement expert : ${theme.focus}. L'évaluation humaine valorise l'écoute, la précision, la sécurité, l'empathie et la prise en charge plutôt qu'un discours commercial rapide.`,
+    competencies: ["Français professionnel", "Client difficile", "Écoute active", "Service après-vente", "Escalade responsable"],
+  };
+});
+
 const FACTS = [
   {
     product: "CodinCloud",
-    version: "v1.1",
-    content: `APPROVED FACTS (public positioning, 2026-11). CodinCloud presents itself as an IT and digital-solutions company supporting online sellers and businesses with e-commerce, technical support, marketing and website development. Its public portfolio includes Vendeur.site for commerce, Dmagh.ai for AI-assisted development and orchestration, and Lanci.io for agent workspaces and MCP tools. CodinCloud describes seller and client portals plus ticketing for communication and support.
+    version: "v1.2",
+    content: `APPROVED FACTS (public positioning, 2026-11). CodinCloud presents itself as an IT and digital-solutions company supporting online sellers and businesses with e-commerce, technical support, digital marketing and website development. Its public page describes seller and client portals, ticketing connected to email, billing, purchasing and technical agents, and coordination between sellers, customers, support agents, sales agents and couriers. CodinCloud publicly links to Vendeur.site and its broader CodinCloud ecosystem; product-specific claims must be checked against the relevant official product page.
 DO NOT CLAIM without written confirmation: a guaranteed outcome, SLA, certification, named client reference, delivery date, discount, contract term, security posture beyond the product's public wording, or a capability belonging to another CodinCloud product.`,
   },
   {
     product: "Vendeur.site",
-    version: "v1.1",
-    content: `APPROVED FACTS (public positioning, 2026-11). Vendeur.site publicly presents an AI-assisted site builder for online stores, a multi-channel inbox for Messenger, Instagram, WhatsApp and Marketplace, and management for products, stock, orders, customers, employees and couriers. Its public page also describes TunisiaShip shipping, analytics and RFM segmentation, CSV exports, version restoration, custom domains, and an AI studio that can edit a store conversationally. Public pricing shown is Starter free, Pro 49 TND/month and Business contact us; the current price and terms must still be confirmed before quoting.
+    version: "v1.2",
+    content: `APPROVED FACTS (public positioning, 2026-11). Vendeur.site publicly presents an AI site builder, conversational editing, a multi-channel inbox for Messenger, Instagram, WhatsApp and Marketplace, and management for products, stock, orders, customers, employees and couriers. The official page describes TunisiaShip labels, tracking and returns, analytics, RFM segmentation, CSV exports, version restoration, custom domains, Konnect and cash on delivery; it says Stripe and TikTok features are coming soon. Public pricing shown is Starter free, Pro 49 TND/month and Business contact us; confirm current terms before quoting.
 TO CONFIRM WITH THE PRODUCT OWNER: any payment provider beyond what the current product page states, exact delivery or stock-sync behavior, multi-vendor payout details, customer-specific data handling, launch dates, discounts, SLAs or guaranteed conversion/results. Never present a roadmap item as live.`,
   },
   {
     product: "Dmagh.ai",
-    version: "v1.1",
-    content: `APPROVED FACTS (public positioning, 2026-11). Dmagh.ai publicly presents dmagh-code as a programming agent whose agent loop — tools, permissions and sessions — runs on the machine where it is installed, while the model produces text. The ecosystem connects teams, machines and automations and presents terminal, web canvas, VS Code/editor, mobile and assistant surfaces. Public materials describe automations, approval requests, MCP packs and dmagh ci for pull-request review, failed-check repair and failure analysis, with SARIF, Code Quality and PR-comment outputs. Some surfaces are labelled Soon or In preparation and must not be sold as available.
+    version: "v1.2",
+    content: `APPROVED FACTS (public positioning, 2026-11). Dmagh.ai publicly presents dmagh-code as a programming agent whose agent loop — tools, permissions and sessions — runs on the installed machine while the model produces text. The official site describes terminal, web canvas, VS Code/editor, mobile and assistant surfaces; automations with approvals and notifications; MCP packs; and dmagh ci for pull-request review, failed-check repair and failure analysis with SARIF, Code Quality and PR-comment outputs. It also describes linked machines, temporary sharing under owner approval, board integrations and a free cloud environment that can be extended up to 72 hours. Some surfaces are labelled Soon or In preparation and must not be sold as available.
 DO NOT CLAIM: a security certification, absolute data residency, a specific model provider, exact model costs, ROI, performance, autonomous production authority or a capability marked Soon/In preparation. Security and compliance questions require technical and legal validation with a named owner and date.`,
   },
   {
     product: "Lanci.io",
-    version: "v1.1",
+    version: "v1.2",
     content: `APPROVED FACTS (public positioning, 2026-11). Lanci.io is presented publicly as an MCP marketplace that connects agents to business tools and provides isolated workspaces.
 DO NOT CLAIM: a specific list of supported tools, certifications, data-residency guarantees or prices. Any integration claim requires confirmation from the product owner.`,
   },
@@ -404,7 +446,7 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     if (present) continue;
@@ -425,7 +467,7 @@ export async function seedAcademy() {
       competencies: JSON.stringify(s.competencies),
       rubric: rubricJson(),
       durationSeconds: s.duration ?? 0,
-      factVersion: "v1.0",
+      factVersion: "v1.2",
       status: "published",
     });
     const id = (row as { insertId: number }).insertId;
@@ -443,19 +485,15 @@ export async function seedAcademy() {
   console.log(`Academy catalogue checked: ${all.length} scenario definitions`);
 
   // Product facts
-  const facts = await db.select({ id: productFacts.id }).from(productFacts).limit(1);
-  if (facts.length === 0) {
-    for (const f of FACTS) {
-      await db.insert(productFacts).values({
-        product: f.product,
-        version: f.version,
-        status: "approved",
-        content: f.content,
-        approvedAt: new Date(),
-      });
+  for (const f of FACTS) {
+    const [existing] = await db.select({ id: productFacts.id }).from(productFacts).where(eq(productFacts.product, f.product)).limit(1);
+    if (existing) {
+      await db.update(productFacts).set({ version: f.version, status: "approved", content: f.content, approvedAt: new Date() }).where(eq(productFacts.id, existing.id));
+    } else {
+      await db.insert(productFacts).values({ product: f.product, version: f.version, status: "approved", content: f.content, approvedAt: new Date() });
     }
-    console.log("Seeded approved product-fact baselines");
   }
+  console.log("Approved product-fact baselines refreshed");
 
   // Demo cohort (fictional)
   const demoUsers = [

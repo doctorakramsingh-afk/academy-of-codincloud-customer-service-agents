@@ -46,7 +46,7 @@ function Overview() {
               </button>
             )}
             <Link href="/library" className="inline-flex items-center gap-2 rounded-sm border border-line px-5 py-2.5 text-sm font-medium hover:bg-paper-2">
-              <BookOpen className="h-4 w-4" /> Browse 126 folios
+              <BookOpen className="h-4 w-4" /> Browse 1026 folios
             </Link>
           </div>
         </div>
@@ -109,7 +109,7 @@ function Overview() {
       <section className="pt-10">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionHeading eyebrow="Scenario folios" title="Recent simulations" className="mb-0">
-            The 100-call English challenge is the first pack. French recordings and multilingual practice are also labelled clearly. Multilingual folios extend the practice into German, English, Spanish, Italian, Japanese, Chinese, Portuguese and French call-center selling for CodinCloud solutions.
+            The 500-simulation English challenge plus 500 French simulations is the first pack. French recordings and multilingual practice are also labelled clearly. Multilingual folios extend the practice into German, English, Spanish, Italian, Japanese, Chinese, Portuguese and French call-center selling for CodinCloud solutions.
           </SectionHeading>
           <Link href="/library" className="mb-1 inline-flex items-center gap-1.5 text-[13px] font-medium text-teal-dark link-underline">
             All folios <ArrowRight className="h-3.5 w-3.5" />
