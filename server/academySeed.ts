@@ -381,6 +381,8 @@ const FRENCH_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }>
   "010": { file: "french-call-010_72a90abb.mp3", duration: 30 },
   "011": { file: "french-call-011_41165847.mp3", duration: 29 },
   "012": { file: "french-call-012_1110c825.mp3", duration: 32 },
+  "013": { file: "french-call-013_3f0e9e29.mp3", duration: 36 },
+  "014": { file: "french-call-014_39c02377.mp3", duration: 38 },
 };
 
 const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index) => {
