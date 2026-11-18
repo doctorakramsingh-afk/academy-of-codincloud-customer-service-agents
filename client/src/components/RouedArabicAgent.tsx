@@ -21,7 +21,7 @@ const COPY: Record<WelcomeLanguage, {
     name: "العربية",
     direction: "rtl",
     kicker: "متخصص تسويق وتطوير أعمال مستقل",
-    subtitle: "Roued (رُوّاد) El Fadhel · أكاديمية CodinCloud",
+    subtitle: "Roued El Fadhel · أكاديمية CodinCloud",
     body: "مرحباً. اسمي روّاد الفاضل، روّاد مثل جمع رائد. أنا متخصص مستقل في التسويق الرقمي وتطوير الأعمال، وقد صممت فكرة هذه الأكاديمية المتواضعة والمفتوحة للتدرّب بجدية على بيع منتجات CodinCloud وخدمة العملاء والتواصل مع العملاء الصعبين باحترام ودبلوماسية من الدرجة الأولى.",
     play: "استمعوا إلى رسالة روّاد",
     stop: "إيقاف الرسالة الصوتية",
@@ -32,20 +32,20 @@ const COPY: Record<WelcomeLanguage, {
     name: "Français",
     direction: "ltr",
     kicker: "Spécialiste freelance en marketing et développement commercial",
-    subtitle: "Roued (رُوّاد) El Fadhel · Académie CodinCloud",
-    body: "Bonjour, je m'appelle Roued El Fadhel — Roued se prononce comme رُوّاد, le pluriel arabe de pionnier. Je suis spécialiste indépendant en marketing et développeur commercial freelance. J'ai conçu l'idée de cette humble académie ouverte pour s'entraîner sérieusement à la vente CodinCloud, au service client et à la diplomatie face aux clients difficiles.",
-    play: "Écouter le message de Roued / رُوّاد",
+    subtitle: "Roued El Fadhel · Académie CodinCloud",
+    body: "Bonjour, je m'appelle Roued El Fadhel. Je suis professeur polyglotte, spécialiste indépendant en marketing et développeur commercial freelance. Moi, Roued, avec Manus, nous avons conçu cette modeste plateforme comme portail d'entraînement. Elle n'a pas été conçue par Aymen Chaieb ni en son nom.",
+    play: "Écouter le message de Roued",
     stop: "Arrêter le message audio",
-    disclaimer: "Aymen Chaieb n'a pas revendiqué la responsabilité des usages de cette initiative. Vérifiez les informations officielles et entraînez-vous sérieusement avant toute représentation commerciale de CodinCloud.",
+    disclaimer: "Aymen Chaieb, fondateur de CodinCloud, reste le décideur final pour toute autorisation, tout engagement et toute formalité officielle, mais cette initiative pédagogique est distincte de lui et ne parle pas en son nom. Vérifiez les informations officielles et entraînez-vous sérieusement avant toute représentation commerciale.",
     close: "Fermer le message de Roued",
   },
   en: {
     name: "English",
     direction: "ltr",
     kicker: "Freelance marketing specialist and business developer",
-    subtitle: "Roued (رُوّاد) El Fadhel · CodinCloud Academy",
-    body: "Hello, I am Roued El Fadhel — Roued is pronounced like رُوّاد, the Arabic plural of pioneer. I am an independent freelance marketing specialist and business developer, and I designed the idea for this humble, open Academy to practise CodinCloud sales, customer service, digital marketing and first-class diplomacy with difficult customers.",
-    play: "Listen to Roued / رُوّاد",
+    subtitle: "Roued El Fadhel · CodinCloud Academy",
+    body: "Hello, I am Roued El Fadhel. I am an independent freelance marketing specialist and business developer, and I designed the idea for this humble, open Academy to practise CodinCloud sales, customer service, digital marketing and first-class diplomacy with difficult customers.",
+    play: "Listen to Roued",
     stop: "Stop the welcome audio",
     disclaimer: "Aymen Chaieb has not claimed responsibility for how anyone uses this initiative. Verify official information and train seriously before representing CodinCloud commercially.",
     close: "Close Roued's welcome",
@@ -137,10 +137,10 @@ export default function RouedArabicAgent() {
       {open && (
         <section aria-label={`${copy.subtitle} welcome`} className="mb-3 w-[min(25rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-teal/30 bg-card text-card-foreground shadow-2xl shadow-ink/20 animate-rise">
           <div className="flex items-start gap-3 bg-ink px-4 py-3 text-paper">
-            <img src="/roued-el-fadhel.png" alt="Roued (رُوّاد) El Fadhel" className="h-14 w-14 shrink-0 rounded-full border-2 border-teal object-cover object-top" />
+            <img src="/roued-el-fadhel.png" alt="Roued El Fadhel" className="h-14 w-14 shrink-0 rounded-full border-2 border-teal object-cover object-top" />
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-teal-100">{copy.kicker}</p>
-              <h2 className="mt-1 text-base font-semibold">Roued (رُوّاد) El Fadhel</h2>
+              <h2 className="mt-1 text-base font-semibold">Roued El Fadhel</h2>
               <p className="mt-1 text-xs leading-5 text-paper/75">{copy.subtitle}</p>
             </div>
             <button type="button" onClick={dismiss} aria-label={copy.close} className="rounded-full p-1 text-paper/70 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-teal"><X className="h-4 w-4" /></button>
@@ -171,7 +171,7 @@ export default function RouedArabicAgent() {
       <div className="flex items-center justify-end gap-2">
         {!open && !dismissed && <span className="rounded-full border border-teal/25 bg-card px-3 py-2 text-xs font-medium text-ink shadow-lg">Roued welcomes you · {copy.name}</span>}
         <button type="button" onClick={dismissed ? reopen : () => setOpen(value => !value)} aria-label={open ? "Close Roued welcome" : "Open Roued welcome agent"} className="group relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-teal bg-ink shadow-xl shadow-ink/25 transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal">
-          <img src="/roued-el-fadhel.png" alt="Roued (رُوّاد) El Fadhel" className="h-full w-full object-cover object-top" />
+          <img src="/roued-el-fadhel.png" alt="Roued El Fadhel" className="h-full w-full object-cover object-top" />
           <span className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-ink/75 py-1 text-paper">{open ? <X className="h-4 w-4" /> : dismissed ? <MessageCircle className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}</span>
         </button>
       </div>
