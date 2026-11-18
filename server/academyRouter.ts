@@ -442,6 +442,37 @@ Begin or continue the conversation naturally.`;
         const content = result.choices?.[0]?.message?.content;
         return { advisory: typeof content === "string" ? content : "Coaching unavailable right now." };
       }),
+
+    codieChat: protectedProcedure
+      .input(z.object({
+        language: z.string().min(2).max(8),
+        messages: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(4000) })).max(30),
+      }))
+      .mutation(async ({ input }) => {
+        const d = await db();
+        const facts = await d.select().from(productFacts).where(eq(productFacts.status, "approved"));
+        if (facts.length === 0) {
+          throw new TRPCError({ code: "PRECONDITION_FAILED", message: "An administrator must approve the product-fact baseline before Codie can coach." });
+        }
+        const approved = facts.map(f => `${f.product} (${f.version}):\n${f.content}`).join("\n\n");
+        const system = `You are Codie, a warm, elegant, humble female AI coach inside CodinCloud Academy. You are clearly an AI training assistant, not a human employee, recruiter, legal adviser, or authorised sales representative.
+The learner is practising marketing, digital marketing, sales calls and customer communication for CodinCloud IT solutions. Respond in the selected language code "${input.language}". If the learner writes in another language, gently follow the selected language unless they explicitly change it.
+Your coaching standard is five-star service: deep respect, patience, active listening, precise reformulation, permission before pitching, one useful question at a time, calm handling of resistance, honest boundaries, data minimisation, and a named next step. Teach practical tactics, sample phrases, discovery questions, objection handling, call openings, follow-ups, content ideas and ethical persuasion.
+Use only the approved product facts below. Never invent a feature, integration, price, certification, customer result, ROI, delivery date, discount, security guarantee or client reference. Mark anything uncertain as requiring verification from the product owner.
+Do not promise employment, commission, clients, immigration status, revenue or commercial authorisation. Do not make hiring decisions or assign scores. Encourage human review and respectful feedback. Keep responses useful and conversational: normally 3-7 short paragraphs or bullets, with at least one usable example when appropriate.
+
+APPROVED PRODUCT FACTS:\n${approved}`;
+        const result = await invokeLLM({
+          model: "claude-haiku-4-5",
+          maxTokens: 900,
+          messages: [
+            { role: "system", content: system },
+            ...input.messages.map(m => ({ role: m.role as "user" | "assistant", content: m.content })),
+          ],
+        });
+        const content = result.choices?.[0]?.message?.content;
+        return { reply: typeof content === "string" ? content : "I need a moment to verify that coaching point." };
+      }),
   }),
 
   consent: router({

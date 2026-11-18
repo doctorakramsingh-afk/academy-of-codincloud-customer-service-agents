@@ -10,6 +10,8 @@ The first challenge pack contains 500 integrated English call simulations and 50
 
 The Academy teaches evidence-led conversations around CodinCloud solutions including Vendeur.site, Dmagh.ai, Lanci.io and CodinCloud support services. The AI role-play is bounded by an administrator-approved product-fact baseline: it must not invent capabilities, prices, integrations, certifications, results or commitments. Formal scores, coaching and hiring decisions remain human.
 
+The optional floating **Codie** coach provides multilingual practice for digital marketing, sales calls, ethical persuasion, active listening and five-star handling of resistant customers. Learners choose a chat language and receive tactics, sample phrases and respectful feedback; Codie is clearly labelled as an AI practice coach, not a human employee or commercial authoriser.
+
 ## Arabic field manual
 
 The project includes an Arabic manual for independent sales representatives, freelance marketers and Academy learners. It explains the verified product-positioning boundaries, ethical outreach, privacy rules and step-by-step use of the Academy without implying employment, agency, commission or guaranteed commercial results.

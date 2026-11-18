@@ -13,6 +13,7 @@ import Coach from "./pages/Coach";
 import Interview from "./pages/Interview";
 import Admin from "./pages/Admin";
 import RouedArabicAgent from "./components/RouedArabicAgent";
+import CodieCoach from "./components/CodieCoach";
 
 function Router() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Toaster />
           <Router />
           <RouedArabicAgent />
+          <CodieCoach />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
