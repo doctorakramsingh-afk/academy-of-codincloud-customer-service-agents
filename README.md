@@ -8,6 +8,13 @@ The first challenge pack contains 500 integrated English call simulations and 50
 
 The Academy teaches evidence-led conversations around CodinCloud solutions including Vendeur.site, Dmagh.ai, Lanci.io and CodinCloud support services. The AI role-play is bounded by an administrator-approved product-fact baseline: it must not invent capabilities, prices, integrations, certifications, results or commitments. Formal scores, coaching and hiring decisions remain human.
 
+## Arabic field manual
+
+The project includes an Arabic manual for independent sales representatives, freelance marketers and Academy learners. It explains the verified product-positioning boundaries, ethical outreach, privacy rules and step-by-step use of the Academy without implying employment, agency, commission or guaranteed commercial results.
+
+- [Read the Arabic manual (Markdown)](docs/دليل-العمل-واستخدام-الأكاديمية-بالعربية.md)
+- [Download the Arabic manual (PDF)](docs/دليل-العمل-واستخدام-الأكاديمية-بالعربية.pdf)
+
 ## Languages
 
 The English challenge pack is first. The same SaaS already has role-play language support for French, Spanish, German, Italian, Portuguese, Japanese, Chinese and Arabic, plus bilingual interview pathways. Localized challenge packs can be added without changing the assessment, consent, assignment or coaching model.
