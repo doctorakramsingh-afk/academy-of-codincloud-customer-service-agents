@@ -2,7 +2,7 @@
 
 An open-source training SaaS for people who represent CodinCloud across customer service, sales, onboarding, technical support and after-sales conversations.
 
-According to the project context, **Aymen Chaieb** is the owner of CodinCloud. This exact Latin spelling is intentional; it should not be transliterated into a different Arabic or English form. The Academy is also a practice environment for an independent English/French teacher who wants to train as a freelance technology-solution marketer and invite interested learners to try the exercises and share constructive feedback. Practice access does not by itself grant employment, agency or permission to make commercial commitments on CodinCloud's behalf.
+According to the project context, **أيمن الشايب (Aymen Chaieb)** is the owner of CodinCloud. Both spellings are intentional; do not replace them with a different transliteration such as “El Chayeb”. The Academy is also a practice environment for an independent English/French teacher who wants to train as a freelance technology-solution marketer and invite interested learners to try the exercises and share constructive feedback. Practice access does not by itself grant employment, agency or permission to make commercial commitments on CodinCloud's behalf.
 
 ## 500-simulation English challenge plus 500 French simulations
 

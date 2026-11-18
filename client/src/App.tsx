@@ -12,6 +12,7 @@ import Assignments from "./pages/Assignments";
 import Coach from "./pages/Coach";
 import Interview from "./pages/Interview";
 import Admin from "./pages/Admin";
+import RouedArabicAgent from "./components/RouedArabicAgent";
 
 function Router() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <RouedArabicAgent />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
