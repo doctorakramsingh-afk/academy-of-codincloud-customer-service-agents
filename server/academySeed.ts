@@ -383,6 +383,23 @@ const FRENCH_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }>
   "012": { file: "french-call-012_1110c825.mp3", duration: 32 },
   "013": { file: "french-call-013_3f0e9e29.mp3", duration: 36 },
   "014": { file: "french-call-014_39c02377.mp3", duration: 38 },
+  "019": { file: "french-call-019_8672ce47.mp3", duration: 81 },
+};
+
+const GERMAN_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "german-call-001_bdb12ac6.mp3", duration: 91 },
+};
+
+const SPANISH_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "spanish-call-001_12cdf753.mp3", duration: 82 },
+};
+
+const ITALIAN_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "italian-call-001_553422c0.mp3", duration: 80 },
+};
+
+const RUSSIAN_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "russian-call-001_0a5c7827.mp3", duration: 88 },
 };
 
 const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index) => {
@@ -468,6 +485,67 @@ const FRENCH_SIMULATIONS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index
   };
 });
 
+const MULTILINGUAL_TRACKS = [
+  {
+    language: "de", name: "Deutsch", label: "DE", startFolio: 1027,
+    titles: ["Der misstrauische Einkaufsleiter", "Die Sicherheitseskalation", "Das gescheiterte Pilotprojekt", "Der wütende Ausfallanruf", "Die unmögliche Integration", "Die Preisfalle", "Der überforderte Anrufer", "Die ROI-Forderung", "Die Verlängerung außerhalb des Umfangs", "Die internationale Übergabe"],
+    sectors: ["Einzelhandel", "SaaS-Entwicklung", "Gesundheitsverwaltung", "Logistik", "Finanzdienstleistungen", "Bildung", "Gastgewerbe", "professionelle Dienstleistungen", "Online-Marktplatz", "Kundensupport"],
+    agent: "CodinCloud-Kundenberater oder -Kundenberaterin",
+  },
+  {
+    language: "es", name: "Español", label: "ES", startFolio: 1127,
+    titles: ["El comprador que interrumpe", "La escalada de seguridad", "El piloto fallido", "La llamada durante la crisis", "La integración imposible", "La trampa del precio", "El cliente vulnerable", "El reto del retorno", "La renovación fuera de alcance", "La transferencia internacional"],
+    sectors: ["comercio minorista", "ingeniería SaaS", "administración sanitaria", "logística", "servicios financieros", "educación", "hostelería", "servicios profesionales", "marketplace", "soporte al cliente"],
+    agent: "agente de atención al cliente o ventas de CodinCloud",
+  },
+  {
+    language: "it", name: "Italiano", label: "IT", startFolio: 1227,
+    titles: ["Il responsabile acquisti ostile", "L'escalation di sicurezza", "Il pilota fallito", "La chiamata durante il blocco", "L'integrazione impossibile", "La trappola del prezzo", "Il cliente vulnerabile", "La sfida del ROI", "Il rinnovo fuori ambito", "Il passaggio internazionale"],
+    sectors: ["commercio al dettaglio", "ingegneria SaaS", "amministrazione sanitaria", "logistica", "servizi finanziari", "istruzione", "ospitalità", "servizi professionali", "marketplace", "assistenza clienti"],
+    agent: "agente CodinCloud del servizio clienti o delle vendite",
+  },
+  {
+    language: "ru", name: "Русский", label: "RU", startFolio: 1327,
+    titles: ["Жёсткий руководитель закупок", "Эскалация по безопасности", "Неудачный пилот", "Звонок во время сбоя", "Невозможная интеграция", "Ловушка с ценой", "Уязвимый клиент", "Требование окупаемости", "Продление вне объёма", "Международная передача"],
+    sectors: ["розничная торговля", "разработка SaaS", "медицинская администрация", "логистика", "финансовые услуги", "образование", "гостиничный бизнес", "профессиональные услуги", "онлайн-маркетплейс", "поддержка клиентов"],
+    agent: "агент CodinCloud по обслуживанию клиентов или продажам",
+  },
+] as const;
+
+const MULTILINGUAL_AUDIO: Record<string, Record<string, { file: string; duration: number }>> = {
+  de: GERMAN_CHALLENGE_AUDIO,
+  es: SPANISH_CHALLENGE_AUDIO,
+  it: ITALIAN_CHALLENGE_AUDIO,
+  ru: RUSSIAN_CHALLENGE_AUDIO,
+};
+
+const MULTILINGUAL_SIMULATIONS: ScenarioSeed[] = MULTILINGUAL_TRACKS.flatMap(track => Array.from({ length: 100 }, (_, index) => {
+  const n = index + 1;
+  const number = String(n).padStart(3, "0");
+  const title = track.titles[index % track.titles.length];
+  const sector = track.sectors[index % track.sectors.length];
+  const product = ["Vendeur.site", "Dmagh.ai", "Lanci.io", "CodinCloud"][index % 4];
+  const intensity = ["discovery", "technical validation", "service recovery", "commercial negotiation", "executive close"][Math.floor(index / 10) % 5];
+  const audio = MULTILINGUAL_AUDIO[track.language]?.[number];
+  return {
+    slug: `simulation-${track.language}-${number}`,
+    folio: track.startFolio + index,
+    title: `${track.label} ${number} — ${title} · ${product}`,
+    product,
+    sector: `${track.name} challenge call · ${sector}`,
+    persona: `${title}, a demanding decision-maker in ${sector}`,
+    language: track.language,
+    difficulty: "expert",
+    modality: audio ? "audio" : "text",
+    summary: `${track.name} simulation with a different resistant client, focused on ${intensity}, respectful persuasion and a concrete next step.`,
+    brief: `Call ${number} in the ${track.name} CodinCloud track. The client is resistant and tests the ${track.agent}. Lead with empathy and discovery, use only approved facts for ${product}, never invent a feature, integration, price, certification, result or deadline, and guide the conversation toward a verified next step or a respectful disqualification.`,
+    coachingFocus: `Deal-winner practice in ${track.name}: active listening, calm objection handling, accurate positioning, ethical persuasion, ownership and a clear next step.`,
+    competencies: [`${track.name} professional communication`, "Tough-customer handling", "Discovery", "Product truth", "Deal ownership"],
+    file: audio?.file,
+    duration: audio?.duration,
+  } satisfies ScenarioSeed;
+}));
+
 const FACTS = [
   {
     product: "CodinCloud",
@@ -504,7 +582,7 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     let id: number;
