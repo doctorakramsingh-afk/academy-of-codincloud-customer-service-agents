@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { MessageCircle, Send, Sparkles, Volume2, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
 
@@ -18,6 +18,10 @@ const languages = [
 ] as const;
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
+
+const SPEECH_LANGUAGES: Record<string, string> = {
+  ar: "ar-SA", en: "en-US", fr: "fr-FR", es: "es-ES", de: "de-DE", it: "it-IT", pt: "pt-BR", ja: "ja-JP", zh: "zh-CN",
+};
 
 export default function CodieCoach() {
   const [open, setOpen] = useState(false);
@@ -44,6 +48,15 @@ export default function CodieCoach() {
 
   const selectedLanguage = languages.find(([code]) => code === language)?.[1] ?? "العربية";
   const isArabic = language === "ar";
+
+  const speak = (content: string) => {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(content);
+    utterance.lang = SPEECH_LANGUAGES[language] ?? "en-US";
+    utterance.rate = 0.94;
+    window.speechSynthesis.speak(utterance);
+  };
 
   return (
     <div className="fixed bottom-5 left-5 z-[70]" dir={isArabic ? "rtl" : "ltr"}>
@@ -72,7 +85,14 @@ export default function CodieCoach() {
               <div key={`${message.role}-${index}`} className={`flex gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 {message.role === "assistant" && <img src={CODIE_AVATAR} alt="" className="mt-1 h-7 w-7 shrink-0 rounded-full object-cover" />}
                 <div className={`max-w-[86%] rounded-xl px-3 py-2 text-sm leading-6 ${message.role === "user" ? "bg-teal text-paper" : "bg-paper-2 text-ink"}`}>
-                  {message.role === "assistant" ? <Streamdown>{message.content}</Streamdown> : <p className="whitespace-pre-wrap">{message.content}</p>}
+                  {message.role === "assistant" ? (
+                    <>
+                      <Streamdown>{message.content}</Streamdown>
+                      <button type="button" onClick={() => speak(message.content)} className="mt-2 inline-flex items-center gap-1 rounded-md border border-line px-2 py-1 text-[11px] text-inkmuted hover:bg-card" aria-label="Read Codie response aloud">
+                        <Volume2 className="h-3 w-3" /> Read aloud
+                      </button>
+                    </>
+                  ) : <p className="whitespace-pre-wrap">{message.content}</p>}
                 </div>
               </div>
             ))}
@@ -82,6 +102,7 @@ export default function CodieCoach() {
 
           <div className="border-t border-line bg-background/60 p-3">
             <p className="mb-2 text-[11px] leading-5 text-inkmuted">Codie is an AI practice coach. Verify product details with an authorised human before making a promise.</p>
+            <a href="/codie-marketing-playbook.md" target="_blank" rel="noreferrer" className="mb-2 inline-flex text-[11px] font-semibold text-teal-dark underline underline-offset-2">Open the 1,008-line multilingual playbook</a>
             <div className="flex items-end gap-2">
               <textarea value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); send(); } }} placeholder="Ask Codie for a tactic or role-play…" rows={2} className="min-h-10 flex-1 resize-none rounded-lg border border-line bg-card px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-teal" />
               <button type="button" onClick={send} disabled={!input.trim() || chat.isPending} aria-label="Send to Codie" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal text-paper transition hover:bg-teal-dark disabled:opacity-40"><Send className="h-4 w-4" /></button>

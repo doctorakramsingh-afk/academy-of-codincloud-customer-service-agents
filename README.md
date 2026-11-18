@@ -12,6 +12,8 @@ The Academy teaches evidence-led conversations around CodinCloud solutions inclu
 
 The optional floating **Codie** coach provides multilingual practice for digital marketing, sales calls, ethical persuasion, active listening and five-star handling of resistant customers. Learners choose a chat language and receive tactics, sample phrases and respectful feedback; Codie is clearly labelled as an AI practice coach, not a human employee or commercial authoriser.
 
+On landing, the **Roued El Fadhel** welcome agent is visible with Arabic, French and English choices. It attempts a first-visit welcome playback when the browser permits autoplay and always provides a manual play button. Visitors can close the card with X and reopen it from Roued's portrait. Codie's assistant replies can be read aloud in the selected language through browser speech synthesis. The [Codie multilingual marketing playbook](docs/codie-marketing-playbook.md) contains 1,008 numbered practice lines across Arabic, English, French, German, Spanish, Italian and Russian.
+
 ## Arabic field manual
 
 The project includes an Arabic manual for independent sales representatives, freelance marketers and Academy learners. It explains the verified product-positioning boundaries, ethical outreach, privacy rules and step-by-step use of the Academy without implying employment, agency, commission or guaranteed commercial results.
