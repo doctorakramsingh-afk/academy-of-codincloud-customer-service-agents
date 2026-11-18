@@ -3,7 +3,7 @@ import { FactStamp, Folio, LanguageChip, Metric, SectionHeading } from "@/compon
 import { startLogin } from "@/const";
 import { formatDuration, languageLabel } from "@/lib/academy";
 import { trpc } from "@/lib/trpc";
-import { ArrowRight, BookOpen, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, ShieldCheck } from "lucide-react";
 import { Link } from "wouter";
 
 function Overview() {
@@ -46,7 +46,10 @@ function Overview() {
               </button>
             )}
             <Link href="/library" className="inline-flex items-center gap-2 rounded-sm border border-line px-5 py-2.5 text-sm font-medium hover:bg-paper-2">
-              <BookOpen className="h-4 w-4" /> Browse 1026 folios
+              <BookOpen className="h-4 w-4" /> Browse 1426 folios
+            </Link>
+            <Link href="/courses/digital-marketing" className="inline-flex items-center gap-2 rounded-sm border border-line px-5 py-2.5 text-sm font-medium hover:bg-paper-2">
+              <GraduationCap className="h-4 w-4" /> Learn digital marketing
             </Link>
           </div>
         </div>

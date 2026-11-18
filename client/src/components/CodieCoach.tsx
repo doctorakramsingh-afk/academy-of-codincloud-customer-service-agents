@@ -111,7 +111,7 @@ export default function CodieCoach() {
         </section>
       )}
 
-      <button type="button" onClick={() => setOpen(value => !value)} aria-label={open ? "Close Codie" : "Open Codie marketing coach"} className="group flex items-center gap-2 rounded-full border-2 border-teal bg-[#24364d] p-1.5 pr-3 text-paper shadow-xl shadow-ink/25 transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal">
+      <button id="codie-launcher" type="button" onClick={() => setOpen(value => !value)} aria-label={open ? "Close Codie" : "Open Codie marketing coach"} className="group flex items-center gap-2 rounded-full border-2 border-teal bg-[#24364d] p-1.5 pr-3 text-paper shadow-xl shadow-ink/25 transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal">
         <img src={CODIE_AVATAR} alt="Codie" className="h-11 w-11 rounded-full object-cover" />
         <span className="text-right">
           <span className="block text-[10px] uppercase tracking-[0.12em] text-[#9fe4d5]">Open coach</span>

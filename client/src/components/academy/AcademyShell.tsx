@@ -59,6 +59,7 @@ function Wordmark({ compact = false }: { compact?: boolean }) {
 const NAV = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
   { href: "/library", label: "Scenario library", icon: BookOpen },
+  { href: "/courses/digital-marketing", label: "Marketing courses", icon: GraduationCap },
   { href: "/practice", label: "Practice", icon: PenLine },
   { href: "/assignments", label: "My assignments", icon: ClipboardCheck },
   { href: "/coach", label: "Review queue", icon: Users, roles: ["coach", "interviewer", "admin"] },

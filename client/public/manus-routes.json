@@ -2,6 +2,7 @@
   "routes": [
     { "path": "/", "title": "Overview" },
     { "path": "/library", "title": "Scenario library" },
+    { "path": "/courses/digital-marketing", "title": "AI-augmented digital marketing courses" },
     { "path": "/scenarios/:slug", "title": "Scenario folio" },
     { "path": "/practice/:slug", "title": "Practice room" },
     { "path": "/assignments", "title": "My assignments" },

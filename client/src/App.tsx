@@ -14,12 +14,14 @@ import Interview from "./pages/Interview";
 import Admin from "./pages/Admin";
 import RouedArabicAgent from "./components/RouedArabicAgent";
 import CodieCoach from "./components/CodieCoach";
+import Courses from "./pages/Courses";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/library"} component={Library} />
+      <Route path={"/courses/digital-marketing"} component={Courses} />
       <Route path={"/scenarios/:slug"} component={ScenarioDetail} />
       <Route path={"/practice/:slug"} component={Practice} />
       <Route path={"/assignments"} component={Assignments} />
