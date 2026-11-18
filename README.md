@@ -14,6 +14,8 @@ The optional floating **Codie** coach provides multilingual practice for digital
 
 On landing, the **Roued El Fadhel** welcome agent is visible with Arabic, French and English choices. It attempts a first-visit welcome playback when the browser permits autoplay and always provides a manual play button. Visitors can close the card with X and reopen it from Roued's portrait. Codie's assistant replies can be read aloud in the selected language through browser speech synthesis. The [Codie multilingual marketing playbook](docs/codie-marketing-playbook.md) contains 1,008 numbered practice lines across Arabic, English, French, German, Spanish, Italian and Russian.
 
+The [AI-augmented digital-marketing course hub](client/src/pages/Courses.tsx) is the Academy's mega curriculum layer: Google search and measurement, LinkedIn B2B trust-building, content and SEO, AI-assisted campaign work, email/CRM follow-up, call-agent practice and the working [CodinCloud Vision charter](docs/codincloud-vision.md). The charter is intentionally labelled as a working training direction—not an official corporate policy—until an authorised owner approves it. The Academy does not ship or claim to train a literal one-gigabyte foundation model; it uses bounded AI coaching plus a large, inspectable curriculum so learners can understand and challenge the material.
+
 ## Arabic field manual
 
 The project includes an Arabic manual for independent sales representatives, freelance marketers and Academy learners. It explains the verified product-positioning boundaries, ethical outreach, privacy rules and step-by-step use of the Academy without implying employment, agency, commission or guaranteed commercial results.

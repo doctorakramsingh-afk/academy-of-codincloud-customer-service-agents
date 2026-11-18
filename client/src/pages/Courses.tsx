@@ -57,6 +57,15 @@ const modules = [
     lessons: ["Permission and preference", "A concise follow-up sequence", "From campaign signal to discovery call", "Five-star recovery after a difficult reply"],
     outcome: "Move from message to conversation with a named owner, a useful next step and no pressure tactics.",
   },
+  {
+    number: "07",
+    title: "CodinCloud Vision operating system",
+    channel: "Mission · People · Responsible growth",
+    icon: Sparkles,
+    color: "text-[#0f9d8a]",
+    lessons: ["Human dignity before conversion", "AI with accountable humans", "Multilingual inclusion", "Open feedback and ownership after handoff"],
+    outcome: "Adopt a working Academy charter for useful technology, responsible communication, professional excellence and first-class diplomacy.",
+  },
 ];
 
 const standards = [
@@ -76,22 +85,23 @@ export default function Courses() {
       <div className="animate-rise">
         <header className="border-b border-line pb-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="eyebrow">CodinCloud Academy · AI-augmented school</div>
+            <div className="eyebrow">CodinCloud Academy · Mega AI-augmented curriculum</div>
             <span className="stamp stamp-verified"><Sparkles className="h-3 w-3" /> Practice-led</span>
           </div>
           <div className="mt-6 max-w-4xl">
             <div className="rule-teal mb-5" />
             <h1 className="text-[42px] leading-[1.02] md:text-[62px]">Learn digital marketing like a <em className="font-normal italic text-teal-dark">responsible deal winner.</em></h1>
-            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-inkmuted">A practical course hub for people who represent CodinCloud: Google search and measurement, LinkedIn trust-building, content, SEO, email, customer calls and AI-assisted campaign work. Learn the craft, practise the conversation, verify the claim.</p>
+            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-inkmuted">A mega practical curriculum for people who represent CodinCloud: Google search and measurement, LinkedIn trust-building, content, SEO, email, customer calls, AI-assisted campaign work and a working CodinCloud Vision charter. Learn the craft, practise the conversation, verify the claim.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <button type="button" onClick={openCodie} className="inline-flex items-center gap-2 rounded-sm bg-ink px-5 py-2.5 text-sm font-medium text-paper hover:bg-ink-soft"><Bot className="h-4 w-4" /> Ask Codie to coach me</button>
               <a href="/codie-marketing-playbook.md" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-sm border border-line px-5 py-2.5 text-sm font-medium hover:bg-paper-2"><BookOpen className="h-4 w-4" /> Open 1,008-line playbook</a>
+              <a href="/codincloud-vision.md" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-sm border border-line px-5 py-2.5 text-sm font-medium hover:bg-paper-2"><Sparkles className="h-4 w-4" /> Read the working Vision</a>
             </div>
           </div>
         </header>
 
         <section className="grid gap-4 border-b border-line py-8 sm:grid-cols-3">
-          <div className="paper-card p-5"><div className="eyebrow mb-2">Course tracks</div><div className="folio-number text-teal">06</div><p className="mt-2 text-xs leading-5 text-inkmuted">From approved product positioning to campaign measurement and customer conversations.</p></div>
+          <div className="paper-card p-5"><div className="eyebrow mb-2">Course tracks</div><div className="folio-number text-teal">07</div><p className="mt-2 text-xs leading-5 text-inkmuted">From approved product positioning to campaign measurement, customer conversations and the working Vision charter.</p></div>
           <div className="paper-card p-5"><div className="eyebrow mb-2">Practice languages</div><div className="folio-number text-teal">09</div><p className="mt-2 text-xs leading-5 text-inkmuted">Use Codie in Arabic, English, French, Spanish, German, Italian, Portuguese, Japanese or Chinese.</p></div>
           <div className="paper-card p-5"><div className="eyebrow mb-2">Human standard</div><div className="folio-number text-teal">5★</div><p className="mt-2 text-xs leading-5 text-inkmuted">Accuracy, empathy, privacy, diplomacy and ownership before speed or hype.</p></div>
         </section>
