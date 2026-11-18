@@ -384,22 +384,27 @@ const FRENCH_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }>
   "013": { file: "french-call-013_3f0e9e29.mp3", duration: 36 },
   "014": { file: "french-call-014_39c02377.mp3", duration: 38 },
   "019": { file: "french-call-019_8672ce47.mp3", duration: 81 },
+  "020": { file: "french-call-020_50bb37f0.mp3", duration: 59 },
 };
 
 const GERMAN_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "001": { file: "german-call-001_bdb12ac6.mp3", duration: 91 },
+  "002": { file: "german-call-002_15c56778.mp3", duration: 52 },
 };
 
 const SPANISH_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "001": { file: "spanish-call-001_12cdf753.mp3", duration: 82 },
+  "002": { file: "spanish-call-002_0bd29a05.mp3", duration: 52 },
 };
 
 const ITALIAN_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "001": { file: "italian-call-001_553422c0.mp3", duration: 80 },
+  "002": { file: "italian-call-002_b613c225.mp3", duration: 51 },
 };
 
 const RUSSIAN_CHALLENGE_AUDIO: Record<string, { file: string; duration: number }> = {
   "001": { file: "russian-call-001_0a5c7827.mp3", duration: 88 },
+  "002": { file: "russian-call-002_01e88850.mp3", duration: 67 },
 };
 
 const CHALLENGE_CALLS: ScenarioSeed[] = Array.from({ length: 500 }, (_, index) => {
