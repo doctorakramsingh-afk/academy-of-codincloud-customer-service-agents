@@ -551,6 +551,67 @@ const MULTILINGUAL_SIMULATIONS: ScenarioSeed[] = MULTILINGUAL_TRACKS.flatMap(tra
   } satisfies ScenarioSeed;
 }));
 
+const ADVANCED_MARKETING_AUDIO: Record<string, { file: string; duration: number }> = {
+  "de-001": { file: "mega-de-call-001-final_23536b4f.mp3", duration: 510 },
+  "fr-001": { file: "mega-fr-call-001-final_f0a264f7.mp3", duration: 496 },
+  "en-001": { file: "mega-en-call-001-final_2c400e45.mp3", duration: 535 },
+  "es-001": { file: "mega-es-call-001-final_67b9bb0a.mp3", duration: 494 },
+};
+
+const MEGA_MARKETING_TRACKS = [
+  {
+    language: "de", name: "Deutsch", label: "DE", startFolio: 1427,
+    titles: ["Der CMO fordert sofortige Leads", "Die Agentur verlangt White-Label-Rechte", "Der CEO misstraut jeder KI", "Der Einkäufer blockiert die Discovery", "Die Kampagne ohne Baseline", "Der IT-Leiter fordert eine Garantie", "Die Marke in der Krise", "Der internationale Launch", "Der Newsletter ohne Einwilligung", "Das LinkedIn-Reputationsrisiko"],
+    sectors: ["B2B-SaaS", "E-Commerce", "Logistik", "Gesundheitsverwaltung", "Finanzdienstleistungen", "Bildung", "Einzelhandel", "professionelle Dienstleistungen", "Industrie", "Kundensupport"],
+    agent: "CodinCloud-Marketing- oder Vertriebsberater",
+  },
+  {
+    language: "fr", name: "Français", label: "FR", startFolio: 1452,
+    titles: ["La directrice marketing exige des leads", "L'agence veut une marque blanche", "Le dirigeant doute de toute IA", "L'acheteur bloque la découverte", "La campagne sans référence", "Le DSI exige une garantie", "La marque en crise", "Le lancement international", "La newsletter sans consentement", "Le risque de réputation LinkedIn"],
+    sectors: ["SaaS B2B", "e-commerce", "logistique", "administration sanitaire", "services financiers", "formation", "commerce", "services professionnels", "industrie", "support client"],
+    agent: "conseiller ou conseillère marketing et commerciale CodinCloud",
+  },
+  {
+    language: "en", name: "English", label: "EN", startFolio: 1477,
+    titles: ["The CMO demands instant leads", "The agency wants white-label rights", "The CEO distrusts every AI claim", "Procurement blocks discovery", "The campaign has no baseline", "The IT director demands a guarantee", "The brand crisis", "The international launch", "The newsletter lacks consent", "The LinkedIn reputation risk"],
+    sectors: ["B2B SaaS", "e-commerce", "logistics", "healthcare administration", "financial services", "education", "retail", "professional services", "industrial operations", "customer support"],
+    agent: "CodinCloud marketing or sales representative",
+  },
+  {
+    language: "es", name: "Español", label: "ES", startFolio: 1502,
+    titles: ["La directora de marketing exige leads", "La agencia pide derechos de marca blanca", "El CEO desconfía de toda afirmación de IA", "Compras bloquea el descubrimiento", "La campaña no tiene referencia", "El director de TI exige una garantía", "La crisis de marca", "El lanzamiento internacional", "El boletín no tiene consentimiento", "El riesgo de reputación en LinkedIn"],
+    sectors: ["SaaS B2B", "comercio electrónico", "logística", "administración sanitaria", "servicios financieros", "educación", "comercio minorista", "servicios profesionales", "operaciones industriales", "soporte al cliente"],
+    agent: "representante de marketing o ventas de CodinCloud",
+  },
+] as const;
+
+const MEGA_MARKETING_SIMULATIONS: ScenarioSeed[] = MEGA_MARKETING_TRACKS.flatMap(track => Array.from({ length: 25 }, (_, index) => {
+  const n = index + 1;
+  const number = String(n).padStart(3, "0");
+  const title = track.titles[index % track.titles.length];
+  const sector = track.sectors[index % track.sectors.length];
+  const product = ["CodinCloud", "Vendeur.site", "Dmagh.ai", "Lanci.io"][index % 4];
+  const focus = ["positioning", "campaign measurement", "AI-assisted content", "LinkedIn outreach", "customer-service handoff"][Math.floor(index / 5) % 5];
+  const audio = ADVANCED_MARKETING_AUDIO[`${track.language}-${number}`];
+  return {
+    slug: `mega-marketing-${track.language}-${number}`,
+    folio: track.startFolio + index,
+    title: `${track.label} ${number} — ${title} · ${product}`,
+    product,
+    sector: `${track.name} marketing challenge · ${sector}`,
+    persona: `${title}, a demanding decision-maker in ${sector}`,
+    language: track.language,
+    difficulty: "expert",
+    modality: audio ? "audio" : "text",
+    summary: `${track.name} expert marketing dialogue about ${focus}, resistant stakeholders and a responsible next step.`,
+    brief: `Expert ${track.name} marketing dialogue ${number}. The resistant stakeholder tests the ${track.agent} on ${focus}. Practise discovery, campaign reasoning, respectful persuasion and a clear handoff. Use only approved facts about ${product}; never invent a feature, integration, price, certification, result, deadline, audience size or guarantee. Separate a hypothesis from evidence, protect personal data, obtain permission and end with a named owner and a verifiable next step.`,
+    coachingFocus: `Mega curriculum practice in ${track.name}: ${focus}, active listening, ethical marketing, product truth, multilingual clarity, calm objection handling and accountable ownership.`,
+    competencies: [`${track.name} marketing`, "Campaign reasoning", "Tough stakeholder handling", "Product truth", "Call-agent diplomacy"],
+    file: audio?.file,
+    duration: audio?.duration,
+  } satisfies ScenarioSeed;
+}));
+
 const FACTS = [
   {
     product: "CodinCloud",
@@ -587,7 +648,7 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     let id: number;
