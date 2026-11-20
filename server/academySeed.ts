@@ -612,6 +612,81 @@ const MEGA_MARKETING_SIMULATIONS: ScenarioSeed[] = MEGA_MARKETING_TRACKS.flatMap
   } satisfies ScenarioSeed;
 }));
 
+const PROSPECTING_TRACKS = [
+  {
+    language: "de", name: "Deutsch", label: "DE", startFolio: 1527,
+    titles: ["Die Gatekeeperin verweigert den Termin", "Kein Budget bis nächstes Jahr", "Der etablierte Anbieter", "Der Datenschutzbeauftragte", "Der Vorstand kennt CodinCloud nicht", "Der falsche Ansprechpartner", "Die schlechte Erfahrung mit KI", "Die Ausschreibung ohne Kontext", "Der ungeduldige Rückruf", "Die internationale Einkaufskette"],
+    sectors: ["B2B-SaaS", "Einzelhandel", "Logistik", "Gesundheitsverwaltung", "Finanzdienstleistungen", "Bildung", "Industrie", "professionelle Dienstleistungen", "E-Commerce", "Kundensupport"],
+    agent: "CodinCloud-Prospecting-Agent",
+  },
+  {
+    language: "fr", name: "Français", label: "FR", startFolio: 1552,
+    titles: ["La standardiste refuse le rendez-vous", "Aucun budget avant l'an prochain", "Le fournisseur historique", "Le responsable de la confidentialité", "La direction ne connaît pas CodinCloud", "Le mauvais interlocuteur", "La mauvaise expérience avec l'IA", "L'appel d'offres sans contexte", "Le rappel impatient", "Les achats internationaux"],
+    sectors: ["SaaS B2B", "commerce", "logistique", "administration sanitaire", "services financiers", "formation", "industrie", "services professionnels", "e-commerce", "support client"],
+    agent: "agent de prospection CodinCloud",
+  },
+  {
+    language: "en", name: "English", label: "EN", startFolio: 1577,
+    titles: ["The gatekeeper refuses a meeting", "No budget until next year", "The entrenched incumbent", "The privacy officer", "The board has never heard of CodinCloud", "The wrong stakeholder", "The AI-burned buyer", "The context-free RFP", "The impatient callback", "The international procurement chain"],
+    sectors: ["B2B SaaS", "retail", "logistics", "healthcare administration", "financial services", "education", "industrial operations", "professional services", "e-commerce", "customer support"],
+    agent: "CodinCloud prospecting representative",
+  },
+  {
+    language: "es", name: "Español", label: "ES", startFolio: 1602,
+    titles: ["La recepcionista rechaza la reunión", "No hay presupuesto hasta el próximo año", "El proveedor de siempre", "La responsable de privacidad", "La dirección no conoce CodinCloud", "El interlocutor equivocado", "El comprador decepcionado por la IA", "La licitación sin contexto", "La devolución de llamada impaciente", "La cadena internacional de compras"],
+    sectors: ["SaaS B2B", "comercio minorista", "logística", "administración sanitaria", "servicios financieros", "educación", "operaciones industriales", "servicios profesionales", "comercio electrónico", "soporte al cliente"],
+    agent: "representante de prospección de CodinCloud",
+  },
+] as const;
+
+const PROSPECTING_OBJECTIONS = [
+  "the contact refuses to book time and asks for a one-line explanation instead",
+  "the prospect says there is no budget and demands a price before describing the workflow",
+  "an incumbent supplier is trusted and the prospect sees switching as political risk",
+  "the buyer asks for a privacy, certification or data-residency guarantee that is not approved",
+  "the executive has never heard of CodinCloud and wants proof before allowing discovery",
+  "the first contact is not the owner and will only forward a message if it is useful",
+  "the prospect had a failed AI pilot and calls every new approach another hype cycle",
+  "procurement sends a feature checklist with no business context and demands a completed answer",
+  "the prospect returns the call while distracted and wants an immediate yes-or-no answer",
+  "several countries and teams are involved, but nobody accepts ownership of the evaluation",
+  "the contact asks for a competitor comparison and an unapproved discount in the first minute",
+  "the prospect wants a guaranteed pipeline, conversion rate or revenue result",
+  "the lead source is unclear and the contact questions how their details were obtained",
+  "the prospect asks for a demo before revealing whether the problem is commercial or technical",
+  "the buyer says the current spreadsheet or inbox is good enough and challenges the value of change",
+  "a senior stakeholder joins late and disputes everything agreed with the first contact",
+  "the prospect demands an integration with a named tool that must be verified by the product owner",
+  "the company is in a sensitive sector and asks the representative to bypass normal approval steps",
+  "the prospect wants white-label, employment or resale language that the representative cannot authorise",
+  "the contact is polite but clearly wants to end the call and tests whether the representative respects no",
+] as const;
+
+const ADVANCED_PROSPECTING_SIMULATIONS: ScenarioSeed[] = PROSPECTING_TRACKS.flatMap(track => Array.from({ length: 25 }, (_, index) => {
+  const n = index + 1;
+  const number = String(n).padStart(3, "0");
+  const title = track.titles[index % track.titles.length];
+  const sector = track.sectors[index % track.sectors.length];
+  const product = ["CodinCloud", "Vendeur.site", "Dmagh.ai", "Lanci.io"][index % 4];
+  const objection = PROSPECTING_OBJECTIONS[index % PROSPECTING_OBJECTIONS.length];
+  const approach = ["permission-based opening", "problem qualification", "stakeholder mapping", "evidence-led follow-up", "respectful disqualification"][Math.floor(index / 5) % 5];
+  return {
+    slug: `prospecting-${track.language}-${number}`,
+    folio: track.startFolio + index,
+    title: `${track.label} ${number} — ${title} · ${product}`,
+    product,
+    sector: `${track.name} expert prospecting · ${sector}`,
+    persona: `${title}, a resistant business decision-maker in ${sector}`,
+    language: track.language,
+    difficulty: "expert",
+    modality: "text",
+    summary: `${track.name} cold-prospecting simulation: ${objection}; practise ${approach} and earn a legitimate next step without pressure.`,
+    brief: `Expert ${track.name} prospecting call ${number}. The prospect is resistant because ${objection}. Open with permission, identify whether this is a relevant business problem, and do not force a meeting. Use only approved facts about ${product}; never invent a feature, integration, price, certification, customer reference, result, deadline or guarantee. Ask how the contact prefers to be reached, protect personal data, map the real owner, and close with a small verifiable next step or a respectful no.`,
+    coachingFocus: `${track.name} high-difficulty prospecting: ${approach}, precise qualification, calm objection handling, ethical persistence, product truth and clean opt-out behaviour.`,
+    competencies: [`${track.name} prospecting`, "Cold-call discipline", "Gatekeeper handling", "Qualification", "Ethical persistence", "Respectful disqualification"],
+  } satisfies ScenarioSeed;
+}));
+
 const FACTS = [
   {
     product: "CodinCloud",
@@ -648,7 +723,7 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS, ...ADVANCED_PROSPECTING_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     let id: number;
