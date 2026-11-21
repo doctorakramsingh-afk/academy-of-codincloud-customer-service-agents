@@ -687,6 +687,71 @@ const ADVANCED_PROSPECTING_SIMULATIONS: ScenarioSeed[] = PROSPECTING_TRACKS.flat
   } satisfies ScenarioSeed;
 }));
 
+const ENTERPRISE_TRACKS = [
+  {
+    language: "de", name: "Deutsch", label: "DE", startFolio: 1627,
+    titles: ["Der Einkauf übernimmt das Gespräch", "Der CISO stoppt den Piloten", "Die Rechtsabteilung verlangt eine Zusage", "Der CFO fordert einen Business Case", "Der Vertrieb will sofort versenden", "Der Support eskaliert einen Kundenfall", "Das internationale Buying Committee", "Der Champion verlässt das Unternehmen", "Die Verlängerung mit neuen Forderungen", "Der Vorstand verlangt einen Wettbewerbsvergleich"],
+    sectors: ["Software", "Logistik", "Gesundheitsverwaltung", "Finanzdienstleistungen", "Industrie", "Einzelhandel", "Bildung", "E-Commerce", "Kundensupport", "professionelle Dienstleistungen"],
+    agent: "CodinCloud-Kundenberater",
+  },
+  {
+    language: "fr", name: "Français", label: "FR", startFolio: 1652,
+    titles: ["Les achats prennent la main", "Le RSSI bloque le pilote", "Le juridique exige un engagement", "La direction financière veut un business case", "Les commerciaux veulent publier tout de suite", "Le support escalade un dossier", "Le comité d'achat international", "Le sponsor quitte l'entreprise", "Le renouvellement avec de nouvelles exigences", "La direction demande une comparaison"],
+    sectors: ["logiciels", "logistique", "administration sanitaire", "services financiers", "industrie", "commerce", "formation", "e-commerce", "support client", "services professionnels"],
+    agent: "conseiller clientèle CodinCloud",
+  },
+  {
+    language: "en", name: "English", label: "EN", startFolio: 1677,
+    titles: ["Procurement takes over the call", "The CISO blocks the pilot", "Legal demands a commitment", "The CFO wants a business case", "Sales wants to publish immediately", "Support escalates a customer case", "The international buying committee", "The champion leaves the company", "The renewal adds new demands", "The board requests a comparison"],
+    sectors: ["software", "logistics", "healthcare administration", "financial services", "industrial operations", "retail", "education", "e-commerce", "customer support", "professional services"],
+    agent: "CodinCloud account representative",
+  },
+  {
+    language: "es", name: "Español", label: "ES", startFolio: 1702,
+    titles: ["Compras toma el control de la llamada", "El CISO bloquea el piloto", "Legal exige un compromiso", "Finanzas pide un caso de negocio", "Ventas quiere publicar de inmediato", "Soporte escala un caso", "El comité internacional de compras", "El patrocinador deja la empresa", "La renovación añade exigencias", "La dirección pide una comparación"],
+    sectors: ["software", "logística", "administración sanitaria", "servicios financieros", "operaciones industriales", "comercio minorista", "educación", "comercio electrónico", "soporte al cliente", "servicios profesionales"],
+    agent: "representante de cuentas de CodinCloud",
+  },
+] as const;
+
+const ENTERPRISE_PRESSURES = [
+  "procurement refuses to discuss the workflow and asks only for a final commercial commitment",
+  "security requests a certification, threat model or residency statement that is not approved",
+  "legal asks the representative to accept liability, exclusivity or contract language",
+  "finance demands a guaranteed ROI calculation before allowing a bounded evaluation",
+  "sales wants to use an unverified claim in public content before review",
+  "support reports an urgent issue but the representative cannot access or verify the account",
+  "decision-makers across countries disagree about data ownership and evaluation criteria",
+  "the internal champion leaves and the new owner questions every previous assumption",
+  "an existing customer bundles roadmap requests into a renewal and expects them included",
+  "an executive asks for a competitor attack, named reference or guaranteed result",
+] as const;
+
+const ENTERPRISE_ESCALATION_SIMULATIONS: ScenarioSeed[] = ENTERPRISE_TRACKS.flatMap(track => Array.from({ length: 25 }, (_, index) => {
+  const n = index + 1;
+  const number = String(n).padStart(3, "0");
+  const title = track.titles[index % track.titles.length];
+  const sector = track.sectors[index % track.sectors.length];
+  const product = ["CodinCloud", "Vendeur.site", "Dmagh.ai", "Lanci.io"][index % 4];
+  const pressure = ENTERPRISE_PRESSURES[index % ENTERPRISE_PRESSURES.length];
+  const skill = ["multi-threaded discovery", "risk-aware qualification", "owner mapping", "evidence-based follow-up", "executive communication"][Math.floor(index / 5) % 5];
+  return {
+    slug: `enterprise-${track.language}-${number}`,
+    folio: track.startFolio + index,
+    title: `${track.label} ${number} — ${title} · ${product}`,
+    product,
+    sector: `${track.name} enterprise escalation · ${sector}`,
+    persona: `${title}, a demanding stakeholder in ${sector}`,
+    language: track.language,
+    difficulty: "expert",
+    modality: "text",
+    summary: `${track.name} enterprise simulation: ${pressure}; practise ${skill} without inventing authority or product facts.`,
+    brief: `Expert ${track.name} enterprise conversation ${number}. The stakeholder creates pressure because ${pressure}. Identify the decision, authority, evidence and risk owners before proposing a next step. Use only approved facts about ${product}; never invent a certification, integration, price, customer reference, result, deadline, SLA, legal term or guarantee. Protect personal and account data, document open questions, and keep ownership through a safe handoff. End with a named owner, a dated verification step or a respectful decision not to proceed.`,
+    coachingFocus: `${track.name} enterprise mastery: ${skill}, stakeholder mapping, factual discipline, escalation hygiene, diplomatic disagreement and accountable follow-through.`,
+    competencies: [`${track.name} enterprise communication`, "Stakeholder mapping", "Security and privacy boundaries", "Executive objection handling", "Escalation ownership", "Evidence-led closing"],
+  } satisfies ScenarioSeed;
+}));
+
 const FACTS = [
   {
     product: "CodinCloud",
@@ -723,7 +788,7 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS, ...ADVANCED_PROSPECTING_SIMULATIONS];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS, ...ADVANCED_PROSPECTING_SIMULATIONS, ...ENTERPRISE_ESCALATION_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     let id: number;
