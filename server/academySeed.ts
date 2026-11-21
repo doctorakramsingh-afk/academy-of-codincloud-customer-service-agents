@@ -752,6 +752,62 @@ const ENTERPRISE_ESCALATION_SIMULATIONS: ScenarioSeed[] = ENTERPRISE_TRACKS.flat
   } satisfies ScenarioSeed;
 }));
 
+const JAPANESE_RETAIL_AUDIO: Record<string, { file: string; duration: number }> = {
+  "001": { file: "ja-retail-001_6c24c5f4.mp3", duration: 61 },
+  "002": { file: "ja-retail-002_e39e55b0.mp3", duration: 64 },
+  "003": { file: "ja-retail-003_954832a6.mp3", duration: 56 },
+  "004": { file: "ja-retail-004_09b0c4a9.mp3", duration: 49 },
+  "005": { file: "ja-retail-005_c94c84e9.mp3", duration: 45 },
+  "006": { file: "ja-retail-006_2b230534.mp3", duration: 47 },
+  "007": { file: "ja-retail-007_775ff1e2.mp3", duration: 53 },
+  "008": { file: "ja-retail-008_4fd531f7.mp3", duration: 50 },
+  "009": { file: "ja-retail-009_1854aa2d.mp3", duration: 54 },
+  "010": { file: "ja-retail-010_7c61f1d8.mp3", duration: 49 },
+};
+
+const JAPANESE_SHOPS = [
+  "grocery store", "neighbourhood supermarket", "bakery", "fish shop", "butcher shop", "fruit and vegetable shop", "farmers' market", "convenience store", "organic food shop", "specialty tea shop",
+  "café", "restaurant", "bento shop", "sweets shop", "pharmacy", "cosmetics shop", "clothing boutique", "shoe shop", "sports shop", "children's goods shop",
+  "homewares shop", "furniture showroom", "electronics shop", "mobile-phone shop", "bookshop", "stationery shop", "florist", "pet shop", "hardware shop", "auto-parts shop",
+] as const;
+
+const JAPANESE_COMMUNICATION_THEMES = [
+  { title: "初回のごあいさつ", issue: "the owner wants to understand the purpose before sharing any business details", focus: "permission-based introduction and simple needs discovery" },
+  { title: "商品の見せ方", issue: "the shop has many products but no clear way to explain them online", focus: "catalogue discovery without promising unsupported automation" },
+  { title: "注文の聞き取り", issue: "orders arrive by phone and messages and are sometimes missed", focus: "mapping the current order and confirmation process" },
+  { title: "在庫の確認", issue: "staff do not agree on which stock figure is current", focus: "define the operational source of truth and a bounded review" },
+  { title: "配達の相談", issue: "the owner asks for delivery timing and local courier promises", focus: "separate confirmed workflow facts from details requiring verification" },
+  { title: "忙しい時間帯", issue: "the prospect is busy and gives only short answers", focus: "respectful brevity and a useful follow-up question" },
+  { title: "常連客との関係", issue: "the shop fears that digital tools will make service impersonal", focus: "protecting human service and identifying a small assistive use case" },
+  { title: "価格への質問", issue: "the owner demands a final price before explaining the need", focus: "qualify the situation without inventing current terms" },
+  { title: "個人情報への不安", issue: "the owner is concerned about customer data and asks for a guarantee", focus: "data minimisation, accurate boundaries and correct escalation" },
+  { title: "次の一歩", issue: "the owner is interested but does not want a sales commitment", focus: "a dated, limited next step or a respectful no" },
+] as const;
+
+const JAPANESE_RETAIL_SIMULATIONS: ScenarioSeed[] = JAPANESE_SHOPS.flatMap((shop, shopIndex) => JAPANESE_COMMUNICATION_THEMES.map((theme, themeIndex) => {
+  const n = shopIndex * JAPANESE_COMMUNICATION_THEMES.length + themeIndex + 1;
+  const number = String(n).padStart(3, "0");
+  const product = ["Vendeur.site", "CodinCloud", "Dmagh.ai", "Lanci.io"][n % 4];
+  const audio = JAPANESE_RETAIL_AUDIO[number];
+  return {
+    slug: `japanese-retail-${number}`,
+    folio: 1727 + n - 1,
+    title: `JA ${number} — ${shop} · ${theme.title}`,
+    product,
+    sector: `Japanese retail communication · ${shop}`,
+    persona: `A careful owner or manager of a ${shop}`,
+    language: "ja",
+    difficulty: "advanced",
+    modality: audio ? "audio" : "text",
+    summary: `Japanese communication practice for a ${shop}: ${theme.issue}; practise ${theme.focus}.`,
+    brief: `日本語の小売店コミュニケーション練習 ${number}。相手は${shop}の慎重な店主または担当者です。${theme.issue}。まず丁寧に許可を取り、現在の業務、商品、注文、在庫、接客または配送の流れを聞いてください。${product}については承認済みの事実だけを使い、機能、連携、価格、認証、成果、納期、保証を推測しないでください。個人情報を最小限にし、確認が必要な点は担当者を明示し、最後に小さく検証できる次の一歩、または丁寧なお断りを確認してください。`,
+    coachingFocus: `Japanese retail communication: ${theme.focus}, 丁寧な聞き取り、事実に基づく説明、個人情報への配慮、押しつけないクロージング。`,
+    competencies: ["Japanese communication", "Retail discovery", "Polite listening", "Product truth", "Privacy boundaries", "Next-step clarity"],
+    file: audio?.file,
+    duration: audio?.duration,
+  } satisfies ScenarioSeed;
+}));
+
 const FACTS = [
   {
     product: "CodinCloud",
@@ -788,12 +844,27 @@ export async function seedAcademy() {
   if (!db) throw new Error("DATABASE_URL is required to seed");
 
   // Scenarios + media — insert missing slugs so later catalogue expansions are safe.
-  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS, ...ADVANCED_PROSPECTING_SIMULATIONS, ...ENTERPRISE_ESCALATION_SIMULATIONS];
+  const all = [...SECTORS, ...CALLS, ...PRESENTATIONS, ...TEXT_SCENARIOS, ...MULTILINGUAL_SALES, ...CHALLENGE_CALLS, ...FRENCH_SIMULATIONS, ...MULTILINGUAL_SIMULATIONS, ...MEGA_MARKETING_SIMULATIONS, ...ADVANCED_PROSPECTING_SIMULATIONS, ...ENTERPRISE_ESCALATION_SIMULATIONS, ...JAPANESE_RETAIL_SIMULATIONS];
   for (const s of all) {
     const [present] = await db.select({ id: scenarios.id }).from(scenarios).where(eq(scenarios.slug, s.slug)).limit(1);
     let id: number;
     if (present) {
       id = present.id;
+      await db.update(scenarios).set({
+        title: s.title,
+        product: s.product,
+        sector: s.sector,
+        persona: s.persona,
+        language: s.language ?? (s.languagePair ? s.languagePair : "fr"),
+        languagePair: s.languagePair ?? null,
+        difficulty: s.difficulty,
+        modality: s.modality,
+        summary: s.summary,
+        brief: s.brief,
+        coachingFocus: s.coachingFocus,
+        competencies: JSON.stringify(s.competencies),
+        durationSeconds: s.duration ?? 0,
+      }).where(eq(scenarios.id, id));
     } else {
       const [row] = await db.insert(scenarios).values({
         slug: s.slug,
